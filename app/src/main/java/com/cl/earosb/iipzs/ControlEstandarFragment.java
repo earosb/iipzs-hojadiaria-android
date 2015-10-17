@@ -16,7 +16,7 @@ import com.cl.earosb.iipzs.dummy.DummyContent;
  * Activities containing this fragment MUST implement the {@link OnFragmentInteractionListener}
  * interface.
  */
-public class InspeccionFragment extends ListFragment {
+public class ControlEstandarFragment extends ListFragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -30,8 +30,8 @@ public class InspeccionFragment extends ListFragment {
     private OnFragmentInteractionListener mListener;
 
     // TODO: Rename and change types of parameters
-    public static InspeccionFragment newInstance(String param1, String param2) {
-        InspeccionFragment fragment = new InspeccionFragment();
+    public static ControlEstandarFragment newInstance(String param1, String param2) {
+        ControlEstandarFragment fragment = new ControlEstandarFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -43,7 +43,7 @@ public class InspeccionFragment extends ListFragment {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public InspeccionFragment() {
+    public ControlEstandarFragment() {
     }
 
     @Override

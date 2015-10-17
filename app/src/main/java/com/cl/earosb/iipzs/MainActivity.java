@@ -17,7 +17,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, InspeccionFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener, ControlEstandarFragment.OnFragmentInteractionListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +30,7 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                Snackbar.make(view, "Nuevo Control de estándar", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
             }
         });
@@ -88,7 +88,7 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment;
 
         if (id == R.id.nav_inspecciones) {
-            fragment = new InspeccionFragment();
+            fragment = new ControlEstandarFragment();
             FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
             ft.replace(R.id.content_frame, fragment);
             ft.commit();

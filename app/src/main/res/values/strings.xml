@@ -1,6 +1,11 @@
 <resources>
+    <!--Main app-->
     <string name="app_name">iipzs</string>
-    
+    <string name="title_activity_main">iipzs</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password (optional)</string>
@@ -10,14 +15,16 @@
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
     <string name="error_field_required">This field is required</string>
-    <string name="permission_rationale">"Contacts permissions are needed for providing email
-        completions."
-    </string>
-    <string name="title_activity_main">iipzs</string>
+    <string name="permission_rationale">"Contacts permissions are needed for providing email completions."</string>
 
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-
-    <string name="nav_inspecciones">Inspecciones</string>
+    <!--Drawer-->
+    <string name="nav_inspecciones">Control de estándar</string>
     <string name="action_settings">Settings</string>
+
+    <!--Inspecciones-->
+    <string name="control_estandar_fecha">Fecha:</string>
+    <string name="control_estandar_km_inicio">Kilómetro de inicio:</string>
+
+    <!--Aux-->
+    <string name="empty_text"></string>
 </resources>
