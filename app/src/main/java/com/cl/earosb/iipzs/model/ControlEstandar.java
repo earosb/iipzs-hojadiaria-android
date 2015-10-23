@@ -1,43 +1,32 @@
 package com.cl.earosb.iipzs.model;
 
+import com.activeandroid.Model;
+import com.activeandroid.annotation.Column;
+import com.activeandroid.annotation.Table;
+
 /**
  * Created by earosb on 16-10-15.
  */
-public class ControlEstandar {
+@Table(name = "ControlEstandar")
+public class ControlEstandar extends Model {
 
-    private int id;
+    @Column(name = "remote_id", unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
+    public int remote_id;
 
-    private String fecha;
+    @Column(name = "fecha")
+    public String fecha;
 
-    private int km_inicio;
+    @Column(name = "km_inicio")
+    public int km_inicio;
 
-    public ControlEstandar(int id, String fecha, int km_inicio) {
-        this.id = id;
+    public ControlEstandar() {
+        super();
+    }
+
+    public ControlEstandar(int remote_id, String fecha, int km_inicio) {
+        super();
+        this.remote_id = remote_id;
         this.fecha = fecha;
         this.km_inicio = km_inicio;
-    }
-
-    public int getKm_inicio() {
-        return km_inicio;
-    }
-
-    public void setKm_inicio(int km_inicio) {
-        this.km_inicio = km_inicio;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public String getFecha() {
-        return fecha;
-    }
-
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
     }
 }

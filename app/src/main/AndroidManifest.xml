@@ -15,7 +15,7 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme" >
 
-        <!--Add the following metadata for version and database name-->
+        <!-- Add the following metadata for version and database name -->
         <meta-data
             android:name="AA_DB_NAME"
             android:value="iipzs.db" />
@@ -37,6 +37,15 @@
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" >
+        </activity>
+        <activity
+            android:name=".NuevoCEActivity"
+            android:label="@string/title_activity_nuevo_ce"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.cl.earosb.iipzs.MainActivity" />
         </activity>
     </application>
 
