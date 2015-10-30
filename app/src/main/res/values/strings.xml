@@ -27,5 +27,6 @@
 
     <!--Aux-->
     <string name="empty_text"></string>
+    <string name="empty_partidas">Actualice lista de partidas</string>
     <string name="title_activity_nuevo_ce">Nuevo Control de Estándar</string>
 </resources>
