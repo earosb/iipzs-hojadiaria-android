@@ -2,8 +2,12 @@ package com.cl.earosb.iipzs;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -12,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import com.cl.earosb.iipzs.model.Partida;
 import com.cl.earosb.iipzs.model.PartidaContent;
 
 /**
@@ -67,6 +72,7 @@ public class PartidaFragment extends Fragment implements AbsListView.OnItemClick
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
 
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
@@ -92,6 +98,25 @@ public class PartidaFragment extends Fragment implements AbsListView.OnItemClick
         mListView.setOnItemClickListener(this);
 
         return view;
+    }
+    MenuItem menuSync;
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        menuSync = menu.add("Sincronizar");
+        menuSync.setIcon(android.R.drawable.ic_popup_sync);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+
+         if (id == menuSync.getItemId()) {
+             Snackbar.make(getView(), "Actualizando partidas...", Snackbar.LENGTH_SHORT);
+             new Partida().actualizar();
+         return true;
+         }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

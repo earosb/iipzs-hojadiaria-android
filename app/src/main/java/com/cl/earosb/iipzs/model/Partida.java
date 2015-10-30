@@ -58,7 +58,7 @@ public class Partida extends Model {
     }
 
     public void actualizar() {
-        new DownloadTask().execute("http://icilicafalpzs.cl/api/trabajos");
+        new DownloadTask().execute("http://icilicafalpzs.cl/api/v1/trabajos");
     }
 
     private class DownloadTask extends AsyncTask<String, Long, String> {
@@ -71,10 +71,10 @@ public class Partida extends Model {
         }
 
         protected void onPostExecute(String response) {
-            // Log.d(TAG, prettyfyJSON(response));
+            // Log.d(TAG, response);
+            Log.d(TAG, prettyfyJSON(response));
             Gson gson = new Gson();
-            Type type = new TypeToken<ArrayList<Partida>>() {
-            }.getType();
+            Type type = new TypeToken<ArrayList<Partida>>(){}.getType();
             List<Partida> partidas = gson.fromJson(response, type);
 
             ActiveAndroid.beginTransaction();
