@@ -1,18 +1,14 @@
 package com.cl.earosb.iipzs;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.GridView;
 import android.widget.Toast;
 
-import com.cl.earosb.iipzs.dummy.ImageAdapter;
 import com.cl.earosb.iipzs.model.NuevoCEAdapter;
 
 /**
@@ -40,7 +36,7 @@ public class NuevoCEActivity extends AppCompatActivity {
     }
 
     public void holaPlusDiez(View v){
-        Log.d("TAG_plus", "holaPlusDiez");
+        Log.d("TAG_plus", "|+10| " + v.getId());
     }
 
 }

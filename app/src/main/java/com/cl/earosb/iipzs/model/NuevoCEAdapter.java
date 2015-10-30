@@ -16,18 +16,23 @@ import android.widget.Toast;
 import com.cl.earosb.iipzs.NuevoCEActivity;
 import com.cl.earosb.iipzs.R;
 
+import java.util.List;
+
 /**
  * Created by earosb on 22-10-15.
  */
 public class NuevoCEAdapter extends BaseAdapter {
     private Context mContext;
 
+    private List<Partida> partidas;
+
     public NuevoCEAdapter(Context c) {
         mContext = c;
+        partidas = Partida.getAll();
     }
 
     public int getCount() {
-        return partidas.length;
+        return partidas.size();
     }
 
     public Object getItem(int position) {
@@ -47,10 +52,10 @@ public class NuevoCEAdapter extends BaseAdapter {
         if (convertView == null) {
             gridView = new View(mContext);
             gridView = inflater.inflate(R.layout.grid_nuevo_ce, null);
-            gridView.setLayoutParams(new GridView.LayoutParams(480, 240));
+            // gridView.setLayoutParams(new GridView.LayoutParams(480, 240));
 
             TextView txtPartida = (TextView) gridView.findViewById(R.id.txtview_partida_realizar);
-            txtPartida.setText(partidas[position]);
+            txtPartida.setText(partidas.get(position).nombre);
 
             TextView txtContador = (TextView) gridView.findViewById(R.id.txtview_contador);
             int cont = (position * position) + 1;
@@ -60,7 +65,7 @@ public class NuevoCEAdapter extends BaseAdapter {
             btn_plus_1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Log.d("TAG_plus1", "Mensaje +1");
+                    Log.d("TAG_plus1", "|+1| " + view.getId());
                 }
             });
 
@@ -72,18 +77,4 @@ public class NuevoCEAdapter extends BaseAdapter {
         return gridView;
     }
 
-    private String[] partidas = {
-            "Limpieza de causes, ductos, puentes y alcantarillas",
-            "Instalar balizas en plena vía PK",
-            "Reparación de encalladuras con soldadura",
-            "Reponer perno",
-            "Recoger, seleccionar y acopiar de pequeño material vía",
-            "Reemplazar Aguja de desviadores de reempleo",
-            "Sustitución aislada de durmientes de madera",
-            "Sustitución de durmientes de puentes",
-            "Sustitución de durmientes de desviadores",
-            "Reemplazo continuo de rieles",
-            "Reparación de obras de arte y puentes menores",
-            "Instalar cierro de malla",
-    };
 }

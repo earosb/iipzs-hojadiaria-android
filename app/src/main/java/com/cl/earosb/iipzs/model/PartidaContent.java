@@ -1,4 +1,4 @@
-package com.cl.earosb.iipzs.dummy;
+package com.cl.earosb.iipzs.model;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -11,7 +11,7 @@ import java.util.Map;
  * <p/>
  * TODO: Replace all uses of this class before publishing your app.
  */
-public class DummyContent {
+public class PartidaContent {
 
     /**
      * An array of sample (dummy) items.
@@ -25,9 +25,12 @@ public class DummyContent {
 
     static {
         // Add 3 sample items.
-        addItem(new DummyItem("10", "Item 1"));
-        addItem(new DummyItem("20", "Item 2"));
-        addItem(new DummyItem("30", "Item 3"));
+        List<Partida> partidas = Partida.getAll();
+        int length = partidas.size();
+        for (int i = 0; i< length; i++){
+            Partida p = partidas.get(i);
+            addItem(new DummyItem(String.valueOf(p.getId()), p.nombre + " [" + p.unidad + "]"));
+        }
     }
 
     private static void addItem(DummyItem item) {
