@@ -106,9 +106,8 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
          * Redirige a MainActivity si el usuario esta logueado
          */
         boolean logueado = getSharedPreferences("PREFERENCE", MODE_PRIVATE).getBoolean("logueado", false);
-        if (!logueado) {
+        if (logueado) {
             // Loguea al usuario
-            getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit().putBoolean("logueado", true).commit();
             // Inicia nueva actividad
             startActivity(new Intent(this, MainActivity.class));
         }
@@ -330,7 +329,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
 
             try {
                 // Simulate network access.
-                Thread.sleep(2000);
+                // Thread.sleep(2000);
                 Map<String, String> data = new HashMap<String, String>();
                 data.put("username", mEmail);
                 data.put("password", mPassword);
