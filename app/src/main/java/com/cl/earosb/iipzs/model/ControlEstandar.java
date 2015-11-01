@@ -10,9 +10,6 @@ import com.activeandroid.annotation.Table;
 @Table(name = "ControlEstandar")
 public class ControlEstandar extends Model {
 
-    @Column(name = "remote_id", unique = true, onUniqueConflict = Column.ConflictAction.REPLACE)
-    public int remote_id;
-
     @Column(name = "fecha")
     public String fecha;
 
@@ -23,9 +20,8 @@ public class ControlEstandar extends Model {
         super();
     }
 
-    public ControlEstandar(int remote_id, String fecha, int km_inicio) {
+    public ControlEstandar(String fecha, int km_inicio) {
         super();
-        this.remote_id = remote_id;
         this.fecha = fecha;
         this.km_inicio = km_inicio;
     }
