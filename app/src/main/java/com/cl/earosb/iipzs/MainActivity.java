@@ -1,10 +1,14 @@
 package com.cl.earosb.iipzs;
 
+import android.app.AlertDialog;
+import android.app.DatePickerDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -15,9 +19,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.DatePicker;
+import android.widget.EditText;
+
+import com.cl.earosb.iipzs.model.ControlEstandar;
+
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener, ControlEstandarFragment.OnFragmentInteractionListener, PartidaFragment.OnFragmentInteractionListener {
+
+    private int mYear, mMonth, mDay;
+    private String fechaNuevoCE;
+    private int kmInicioNuevoCE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +44,56 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(getApplicationContext(), NuevoCEActivity.class));
+
+                AlertDialog.Builder builder_confirm = new AlertDialog.Builder(MainActivity.this);
+                builder_confirm.setMessage("¿Crear un nuevo Control de Estándar?")
+                        .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                final Calendar c = Calendar.getInstance();
+                                mYear = c.get(Calendar.YEAR);
+                                mMonth = c.get(Calendar.MONTH);
+                                mDay = c.get(Calendar.DAY_OF_MONTH);
+                                DatePickerDialog dpd = new DatePickerDialog(MainActivity.this,
+                                        new DatePickerDialog.OnDateSetListener() {
+                                            @Override
+                                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                                                Log.d("Fecha: ", dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                                                fechaNuevoCE = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
+                                                AlertDialog.Builder builderKm_inicio = new AlertDialog.Builder(MainActivity.this);
+                                                builderKm_inicio.setTitle("Kilómetro de inicio");
+                                                final EditText input = new EditText(MainActivity.this);
+                                                input.setInputType(InputType.TYPE_CLASS_NUMBER);
+                                                builderKm_inicio.setView(input);
+                                                builderKm_inicio.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                                    @Override
+                                                    public void onClick(DialogInterface dialog, int which) {
+                                                        Log.d("Km Inicio: ", input.getText().toString());
+                                                        kmInicioNuevoCE = Integer.parseInt(input.getText().toString());
+                                                        Log.d("NuevoCE", fechaNuevoCE + " - " + kmInicioNuevoCE);
+
+                                                        ControlEstandar controlEstandar = new ControlEstandar();
+                                                        controlEstandar.fecha = fechaNuevoCE;
+                                                        controlEstandar.km_inicio = kmInicioNuevoCE;
+                                                        controlEstandar.save();
+                                                    }
+                                                });
+                                                builderKm_inicio.show();
+                                            }
+                                        }, mYear, mMonth, mDay);
+                                dpd.setTitle("Fecha de nuevo Control de Estándar");
+                                dpd.show();
+                            }
+                        })
+                        .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // User cancelled the dialog
+                                startActivity(new Intent(getApplicationContext(), NuevoCEActivity.class));
+                            }
+                        });
+                builder_confirm.show();
+
+
+
             }
         });
 
