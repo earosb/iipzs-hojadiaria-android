@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.InputType;
 import android.util.Log;
@@ -93,7 +94,6 @@ public class MainActivity extends AppCompatActivity
                 builder_confirm.show();
 
 
-
             }
         });
 
@@ -106,10 +106,6 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        Fragment fragment = new ControlEstandarFragment();
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.content_frame, fragment);
-        ft.commit();
     }
 
     @Override
@@ -152,24 +148,32 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        Fragment fragment;
 
-        if (id == R.id.nav_inspecciones) {
-            fragment = new ControlEstandarFragment();
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.content_frame, fragment);
-            ft.commit();
-        } else if (id == R.id.nav_partidas) {
-            fragment = new PartidaFragment();
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.content_frame, fragment);
-            ft.commit();
-        } else if (id == R.id.nav_manage) {
+        Fragment fragment = null;
+        String title = getString(R.string.app_name);
 
-        } else if (id == R.id.nav_logout) {
-            getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit().putBoolean("logueado", false).commit();
-            startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+        switch (id){
+            case R.id.nav_inspecciones:
+                fragment = new ControlEstandarFragment();
+                title = "Control de estándar";
+                break;
+            case R.id.nav_partidas:
+                fragment = new PartidaFragment();
+                title = "Partidas";
+                break;
+            case R.id.nav_manage:
+                break;
+            case R.id.nav_logout:
+                getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit().putBoolean("logueado", false).commit();
+                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                break;
         }
+
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, fragment);
+        ft.commit();
+
+        getSupportActionBar().setTitle(title);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
@@ -180,4 +184,5 @@ public class MainActivity extends AppCompatActivity
     public void onFragmentInteraction(String id) {
         Log.v("InspeccionTAG", "ID: " + id);
     }
+
 }

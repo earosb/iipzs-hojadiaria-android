@@ -1,23 +1,48 @@
 package com.cl.earosb.iipzs;
 
+import android.animation.Animator;
+import android.animation.AnimatorListenerAdapter;
+import android.annotation.TargetApi;
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
+import android.text.style.UpdateLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
+import com.activeandroid.ActiveAndroid;
+import com.activeandroid.query.Delete;
+import com.activeandroid.query.Select;
+import com.activeandroid.query.Update;
 import com.cl.earosb.iipzs.model.Partida;
+import com.cl.earosb.iipzs.model.PartidaAdapter;
 import com.cl.earosb.iipzs.model.PartidaContent;
+import com.github.kevinsawicki.http.HttpRequest;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonParser;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A fragment representing a list of Items.
@@ -99,24 +124,23 @@ public class PartidaFragment extends Fragment implements AbsListView.OnItemClick
 
         return view;
     }
-    MenuItem menuSync;
+
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         super.onCreateOptionsMenu(menu, inflater);
-        menuSync = menu.add("Sincronizar");
-        menuSync.setIcon(android.R.drawable.ic_popup_sync);
+        inflater.inflate(R.menu.main, menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        super.onOptionsItemSelected(item);
+
         int id = item.getItemId();
 
-         if (id == menuSync.getItemId()) {
-             Snackbar.make(getView(), "Actualizando partidas...", Snackbar.LENGTH_SHORT);
-             new Partida().actualizar();
-         return true;
-         }
-        return super.onOptionsItemSelected(item);
+        if (id == R.id.action_update) {
+            new DownloadTask().execute("http://icilicafalpzs.cl/api/v1/trabajos");
+        }
+        return true;
     }
 
     @Override
@@ -172,5 +196,68 @@ public class PartidaFragment extends Fragment implements AbsListView.OnItemClick
         // TODO: Update argument type and name
         public void onFragmentInteraction(String id);
     }
+
+    private class DownloadTask extends AsyncTask<String, Long, String> {
+        protected String doInBackground(String... urls) {
+            try {
+                return HttpRequest.get(urls[0]).accept("application/json").body();
+            } catch (HttpRequest.HttpRequestException exception) {
+                return null;
+            }
+        }
+
+        private ProgressDialog nDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            nDialog = new ProgressDialog(getActivity());
+            nDialog.setTitle("Actualizando partidas");
+            nDialog.setMessage("Descargando...");
+            nDialog.setCancelable(false);
+            nDialog.show();
+        }
+
+        protected void onPostExecute(String response) {
+
+            Gson gson = new Gson();
+            Type type = new TypeToken<ArrayList<Partida>>() {
+            }.getType();
+            List<Partida> partidas = gson.fromJson(response, type);
+            
+            ActiveAndroid.beginTransaction();
+            try {
+                int length = partidas.size();
+                for (int i = 0; i < length; i++) {
+                    Partida p = new Select().from(Partida.class).where("remote_id = " + partidas.get(i).remote_id).executeSingle();
+
+                    if (p != null) {
+                        p.nombre = partidas.get(i).remote_id + " " + partidas.get(i).nombre;
+                        p.nombre = partidas.get(i).nombre;
+                        p.unidad = partidas.get(i).unidad;
+                        p.save();
+                    } else {
+                        p = new Partida();
+                        p.remote_id = partidas.get(i).remote_id;
+                        p.nombre = partidas.get(i).nombre;
+                        p.unidad = partidas.get(i).unidad;
+                        p.cont = 0;
+                        p.save();
+                    }
+                }
+                ActiveAndroid.setTransactionSuccessful();
+            } finally {
+                ActiveAndroid.endTransaction();
+            }
+
+//            mAdapter = new ArrayAdapter<PartidaContent.DummyItem>(getActivity(),
+//                    android.R.layout.simple_list_item_1, android.R.id.text1, PartidaContent.ITEMS);
+//            mListView = (AbsListView) getView().findViewById(android.R.id.list);
+//                    ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
+
+            nDialog.hide();
+        }
+    }
+
 
 }

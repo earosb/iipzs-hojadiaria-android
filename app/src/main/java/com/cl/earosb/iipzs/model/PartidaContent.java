@@ -24,7 +24,6 @@ public class PartidaContent {
     public static Map<String, DummyItem> ITEM_MAP = new HashMap<String, DummyItem>();
 
     static {
-        // Add 3 sample items.
         List<Partida> partidas = Partida.getAll();
         int length = partidas.size();
         for (int i = 0; i< length; i++){

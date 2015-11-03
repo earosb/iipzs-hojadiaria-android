@@ -21,6 +21,7 @@
     <!--Drawer-->
     <string name="nav_inspecciones">Control de estándar</string>
     <string name="action_settings">Settings</string>
+    <string name="action_update">Actualizar</string>
 
     <!--Inspecciones-->
     <string name="control_estandar_fecha">Fecha:</string>
