@@ -29,6 +29,6 @@
 
     <!--Aux-->
     <string name="empty_text"></string>
-    <string name="empty_partidas"></string> <!-- Actualice lista de partidas -->
+    <string name="no_data">No existen datos.</string> <!-- Actualice lista de partidas -->
     <string name="title_activity_nuevo_ce">Nuevo Control de Estándar</string>
 </resources>
