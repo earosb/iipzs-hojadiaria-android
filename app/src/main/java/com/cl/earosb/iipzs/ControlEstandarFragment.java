@@ -4,9 +4,12 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.cl.earosb.iipzs.model.ControlEstandar;
 import com.cl.earosb.iipzs.model.ControlEstandarAdapter;
@@ -55,6 +58,12 @@ public class ControlEstandarFragment extends ListFragment {
     }
 
     @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_control_estandar, container, false);
+        return view;
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
@@ -70,7 +79,6 @@ public class ControlEstandarFragment extends ListFragment {
         }else{
             Log.d("List", "NULL");
         }
-
         setListAdapter(mAdapter);
     }
 

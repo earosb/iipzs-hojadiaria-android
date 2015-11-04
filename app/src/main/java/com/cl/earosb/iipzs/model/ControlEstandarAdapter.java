@@ -9,14 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.activeandroid.ActiveAndroid;
 import com.cl.earosb.iipzs.R;
-
-import java.util.List;
-import java.util.ResourceBundle;
 
 /**
  * Created by earosb on 16-10-15.
@@ -27,14 +22,14 @@ public class ControlEstandarAdapter extends ArrayAdapter<ControlEstandar>{
     //private ControlEstandar item;
 
     public ControlEstandarAdapter(Activity context) {
-        super(context, R.layout.control_estandar_item);
+        super(context, R.layout.item_control_estandar);
         this.context = context;
     }
 
     @Override
     public View getView(int position, View view, ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
-        View rowView= inflater.inflate(R.layout.control_estandar_item, null, true);
+        View rowView= inflater.inflate(R.layout.item_control_estandar, null, true);
 
         TextView textFecha = (TextView) rowView.findViewById(R.id.inspeccion_fecha);
         TextView textKm = (TextView) rowView.findViewById(R.id.inspeccion_km_inicio);
