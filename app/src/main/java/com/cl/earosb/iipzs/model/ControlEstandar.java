@@ -3,6 +3,9 @@ package com.cl.earosb.iipzs.model;
 import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
+import com.activeandroid.query.Select;
+
+import java.util.List;
 
 /**
  * Created by earosb on 16-10-15.
@@ -24,5 +27,11 @@ public class ControlEstandar extends Model {
         super();
         this.fecha = fecha;
         this.km_inicio = km_inicio;
+    }
+
+    public static List<ControlEstandar> getAll(){
+        return new Select()
+                .from(ControlEstandar.class)
+                .execute();
     }
 }

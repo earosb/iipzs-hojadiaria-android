@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.text.InputType;
 import android.util.Log;
@@ -46,56 +45,51 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
 
-                AlertDialog.Builder builder_confirm = new AlertDialog.Builder(MainActivity.this);
-                builder_confirm.setMessage("¿Crear un nuevo Control de Estándar?")
-                        .setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                final Calendar c = Calendar.getInstance();
-                                mYear = c.get(Calendar.YEAR);
-                                mMonth = c.get(Calendar.MONTH);
-                                mDay = c.get(Calendar.DAY_OF_MONTH);
-                                DatePickerDialog dpd = new DatePickerDialog(MainActivity.this,
-                                        new DatePickerDialog.OnDateSetListener() {
-                                            @Override
-                                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                                Log.d("Fecha: ", dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
-                                                fechaNuevoCE = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
-                                                AlertDialog.Builder builderKm_inicio = new AlertDialog.Builder(MainActivity.this);
-                                                builderKm_inicio.setTitle("Kilómetro de inicio");
-                                                final EditText input = new EditText(MainActivity.this);
-                                                input.setInputType(InputType.TYPE_CLASS_NUMBER);
-                                                builderKm_inicio.setView(input);
-                                                builderKm_inicio.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                                    @Override
-                                                    public void onClick(DialogInterface dialog, int which) {
-                                                        Log.d("Km Inicio: ", input.getText().toString());
-                                                        kmInicioNuevoCE = Integer.parseInt(input.getText().toString());
-                                                        Log.d("NuevoCE", fechaNuevoCE + " - " + kmInicioNuevoCE);
+                final Calendar c = Calendar.getInstance();
+                mYear = c.get(Calendar.YEAR);
+                mMonth = c.get(Calendar.MONTH);
+                mDay = c.get(Calendar.DAY_OF_MONTH);
+                DatePickerDialog dpd = new DatePickerDialog(MainActivity.this,
+                        new DatePickerDialog.OnDateSetListener() {
+                            @Override
+                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                                Log.d("Fecha: ", dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                                fechaNuevoCE = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
+                                AlertDialog.Builder builderKm_inicio = new AlertDialog.Builder(MainActivity.this);
+                                builderKm_inicio.setTitle("Kilómetro de inicio");
+                                final EditText input = new EditText(MainActivity.this);
+                                input.setInputType(InputType.TYPE_CLASS_NUMBER);
+                                builderKm_inicio.setView(input);
+                                builderKm_inicio.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        Log.d("Km Inicio: ", input.getText().toString());
+                                        kmInicioNuevoCE = Integer.parseInt(input.getText().toString());
+                                        Log.d("NuevoCE", fechaNuevoCE + " - " + kmInicioNuevoCE);
 
-                                                        ControlEstandar controlEstandar = new ControlEstandar();
-                                                        controlEstandar.fecha = fechaNuevoCE;
-                                                        controlEstandar.km_inicio = kmInicioNuevoCE;
-                                                        controlEstandar.save();
-                                                    }
-                                                });
-                                                builderKm_inicio.show();
-                                            }
-                                        }, mYear, mMonth, mDay);
-                                dpd.setTitle("Fecha de nuevo Control de Estándar");
-                                dpd.show();
+                                        ControlEstandar controlEstandar = new ControlEstandar();
+                                        controlEstandar.fecha = fechaNuevoCE;
+                                        controlEstandar.km_inicio = kmInicioNuevoCE;
+                                        controlEstandar.save();
+                                        startActivity(new Intent(getApplicationContext(), NuevoCEActivity.class));
+                                    }
+                                });
+                                builderKm_inicio.show();
                             }
-                        })
-                        .setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                // User cancelled the dialog
-                                startActivity(new Intent(getApplicationContext(), NuevoCEActivity.class));
-                            }
-                        });
-                builder_confirm.show();
-
-
+                        }, mYear, mMonth, mDay);
+                dpd.setTitle("Fecha Control de Estándar");
+                dpd.show();
             }
         });
+
+        String title = getString(R.string.app_name);
+        Fragment fragment = new ControlEstandarFragment();
+        title = "Control de estándar";
+
+        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+        ft.replace(R.id.content_frame, fragment);
+        ft.commit();
+        getSupportActionBar().setTitle(title);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -137,7 +131,7 @@ public class MainActivity extends AppCompatActivity
 
         //noinspection SimplifiableIfStatement
         // if (id == R.id.action_settings) {
-           // return true;
+        // return true;
         // }
 
         return super.onOptionsItemSelected(item);
@@ -152,7 +146,7 @@ public class MainActivity extends AppCompatActivity
         Fragment fragment = null;
         String title = getString(R.string.app_name);
 
-        switch (id){
+        switch (id) {
             case R.id.nav_inspecciones:
                 fragment = new ControlEstandarFragment();
                 title = "Control de estándar";

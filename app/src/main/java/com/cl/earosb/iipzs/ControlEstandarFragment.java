@@ -3,11 +3,17 @@ package com.cl.earosb.iipzs;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
+import com.cl.earosb.iipzs.model.ControlEstandar;
+import com.cl.earosb.iipzs.model.ControlEstandarAdapter;
 import com.cl.earosb.iipzs.model.PartidaContent;
+
+import java.util.List;
+import java.util.ResourceBundle;
 
 /**
  * A fragment representing a list of Items.
@@ -26,6 +32,8 @@ public class ControlEstandarFragment extends ListFragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private ControlEstandarAdapter mAdapter;
 
     private OnFragmentInteractionListener mListener;
 
@@ -55,11 +63,16 @@ public class ControlEstandarFragment extends ListFragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
-        // TODO: Change Adapter to display your content
-        setListAdapter(new ArrayAdapter<PartidaContent.DummyItem>(getActivity(),
-                android.R.layout.simple_list_item_1, android.R.id.text1, PartidaContent.ITEMS));
-    }
+        mAdapter = new ControlEstandarAdapter(getActivity());
+        List<ControlEstandar> list = ControlEstandar.getAll();
+        if (list.size() > 0){
+            mAdapter.addAll(ControlEstandar.getAll());
+        }else{
+            Log.d("List", "NULL");
+        }
 
+        setListAdapter(mAdapter);
+    }
 
     @Override
     public void onAttach(Activity activity) {
