@@ -1,59 +1,38 @@
 package com.cl.earosb.iipzs.model;
 
-import android.content.Context;
-import android.util.Log;
+import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.Button;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
-
-import com.cl.earosb.iipzs.R;
 
 import java.util.List;
 
 /**
  * Created by earosb on 22-10-15.
  */
-public class PartidaAdapter extends BaseAdapter {
-    private Context mContext;
+public class PartidaAdapter extends ArrayAdapter<Partida> {
 
-    private List<Partida> partidas;
+    private final Activity context;
 
-    public PartidaAdapter(Context c) {
-        mContext = c;
-        partidas = Partida.getAll();
+    public PartidaAdapter(Activity context, List<Partida> partidas) {
+        super(context, android.R.layout.simple_list_item_1, partidas);
+        this.context = context;
     }
 
-    public int getCount() {
-        return partidas.size();
-    }
-
-    public Object getItem(int position) {
-        return null;
-    }
-
-    public long getItemId(int position) {
-        return 0;
-    }
-
-    // create a new ImageView for each item referenced by the Adapter
+    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater inflater = context.getLayoutInflater();
+        View view = inflater.inflate(android.R.layout.simple_list_item_1, null, true);
 
-        TextView textView;
+        Partida partida = getItem(position);
 
-        if (convertView == null) {
-            textView = new TextView(mContext);
+        TextView textView = (TextView) view.findViewById(android.R.id.text1);
 
-        } else {
-            textView = (TextView) convertView;
-        }
+        textView.setText(partida.nombre);
 
-        textView.setText(partidas.get(position).nombre);
-
-        return textView;
+        return view;
     }
 
 }
