@@ -27,7 +27,7 @@ import com.cl.earosb.iipzs.model.ControlEstandar;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener, ControlEstandarFragment.OnFragmentInteractionListener {
+        implements NavigationView.OnNavigationItemSelectedListener {
 
     private int mYear, mMonth, mDay;
     private String fechaNuevoCE;
@@ -63,9 +63,7 @@ public class MainActivity extends AppCompatActivity
                                 builderKm_inicio.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
-                                        Log.d("Km Inicio: ", input.getText().toString());
                                         kmInicioNuevoCE = Integer.parseInt(input.getText().toString());
-                                        Log.d("NuevoCE", fechaNuevoCE + " - " + kmInicioNuevoCE);
 
                                         ControlEstandar controlEstandar = new ControlEstandar();
                                         controlEstandar.fecha = fechaNuevoCE;
@@ -172,11 +170,6 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
-    }
-
-    @Override
-    public void onFragmentInteraction(String id) {
-        Log.v("InspeccionTAG", "ID: " + id);
     }
 
 }

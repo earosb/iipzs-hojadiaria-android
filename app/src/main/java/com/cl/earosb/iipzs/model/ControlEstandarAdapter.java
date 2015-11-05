@@ -16,10 +16,8 @@ import com.cl.earosb.iipzs.R;
 /**
  * Created by earosb on 16-10-15.
  */
-public class ControlEstandarAdapter extends ArrayAdapter<ControlEstandar>{
+public class ControlEstandarAdapter extends ArrayAdapter<ControlEstandar> {
     private final Activity context;
-
-    //private ControlEstandar item;
 
     public ControlEstandarAdapter(Activity context) {
         super(context, R.layout.item_control_estandar);
@@ -29,7 +27,7 @@ public class ControlEstandarAdapter extends ArrayAdapter<ControlEstandar>{
     @Override
     public View getView(int position, View view, ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
-        View rowView= inflater.inflate(R.layout.item_control_estandar, null, true);
+        View rowView = inflater.inflate(R.layout.item_control_estandar, null, true);
 
         TextView textFecha = (TextView) rowView.findViewById(R.id.inspeccion_fecha);
         TextView textKm = (TextView) rowView.findViewById(R.id.inspeccion_km_inicio);
