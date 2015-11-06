@@ -38,8 +38,7 @@
         android:text="+10"
         android:id="@+id/btn_plus_10"
         android:layout_alignTop="@+id/btn_plus_1"
-        android:layout_centerHorizontal="true"
-        android:onClick="holaPlusDiez" />
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:layout_width="wrap_content"

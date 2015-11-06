@@ -3,6 +3,7 @@ package com.cl.earosb.iipzs.model;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.cl.earosb.iipzs.NuevoCEActivity;
 import com.cl.earosb.iipzs.R;
 
 /**
@@ -27,11 +29,12 @@ public class ControlEstandarAdapter extends ArrayAdapter<ControlEstandar> {
     @Override
     public View getView(int position, View view, ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
-        View rowView = inflater.inflate(R.layout.item_control_estandar, null, true);
+        final View rowView = inflater.inflate(R.layout.item_control_estandar, null, true);
 
         TextView textFecha = (TextView) rowView.findViewById(R.id.inspeccion_fecha);
         TextView textKm = (TextView) rowView.findViewById(R.id.inspeccion_km_inicio);
         ImageButton btn_delete = (ImageButton) rowView.findViewById(R.id.inspeccion_delete);
+        ImageButton btn_edit = (ImageButton) rowView.findViewById(R.id.inspeccion_edit);
 
         final ControlEstandar item = getItem(position);
 
@@ -59,6 +62,14 @@ public class ControlEstandarAdapter extends ArrayAdapter<ControlEstandar> {
                     }
                 });
                 confirm.show();
+            }
+        });
+
+        btn_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("Edit_CE", String.valueOf(item.getId()));
+                context.startActivity(new Intent(getContext(), NuevoCEActivity.class));
             }
         });
 

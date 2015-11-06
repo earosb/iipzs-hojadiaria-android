@@ -26,6 +26,8 @@ public class NuevoCEAdapter extends BaseAdapter {
 
     private List<Partida> partidas;
 
+    private int cont = 0;
+
     public NuevoCEAdapter(Context c) {
         mContext = c;
         partidas = Partida.getAll();
@@ -43,36 +45,36 @@ public class NuevoCEAdapter extends BaseAdapter {
         return 0;
     }
 
-    // create a new ImageView for each item referenced by the Adapter
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(final int position, View convertView, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         View gridView;
 
         if (convertView == null) {
-            gridView = new View(mContext);
             gridView = inflater.inflate(R.layout.grid_nuevo_ce, null);
-            // gridView.setLayoutParams(new GridView.LayoutParams(480, 240));
+
+            final Partida partida = partidas.get(position);
 
             TextView txtPartida = (TextView) gridView.findViewById(R.id.txtview_partida_realizar);
-            txtPartida.setText(partidas.get(position).nombre);
+            txtPartida.setText(partida.nombre);
 
-            TextView txtContador = (TextView) gridView.findViewById(R.id.txtview_contador);
-            int cont = (position * position) + 1;
-            txtContador.setText("" + cont);
+            final TextView txtContador = (TextView) gridView.findViewById(R.id.txtview_contador);
+            txtContador.setText(0);
 
             Button btn_plus_1 = (Button) gridView.findViewById(R.id.btn_plus_1);
             btn_plus_1.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Log.d("TAG_plus1", "|+1| " + view.getId());
+                    int aux = Integer.parseInt((String) txtContador.getText());
+                    txtContador.setText((aux + 1));
+                    notifyDataSetChanged();
                 }
             });
 
         } else {
             gridView = (View) convertView;
         }
-
 
         return gridView;
     }
