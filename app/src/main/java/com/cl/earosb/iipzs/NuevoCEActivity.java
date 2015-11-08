@@ -1,7 +1,13 @@
 package com.cl.earosb.iipzs;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,49 +19,108 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.Toast;
 
+import com.cl.earosb.iipzs.model.ControlEstandar;
 import com.cl.earosb.iipzs.model.NuevoCEAdapter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Activity para Nuevo Control de Estandar
  */
 public class NuevoCEActivity extends AppCompatActivity {
 
-    RecyclerView mRecyclerView;
-    RecyclerView.LayoutManager mLayoutManager;
-    RecyclerView.Adapter mAdapter;
+    private ViewPager viewPager;
+    private PagerAdapter pagerAdapter;
+    private TabLayout tabLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nuevo_ce);
 
+        Bundle b = getIntent().getExtras();
+        long ceId = b.getLong("ce_id");
+        Log.d("CE", String.valueOf(ceId));
+
+        ControlEstandar controlEstandar = ControlEstandar.load(ControlEstandar.class, ceId);
+
+        Log.d("CE", String.valueOf(controlEstandar.km_inicio));
+        Log.d("CE", controlEstandar.fecha);
+        Log.d("CE", String.valueOf(controlEstandar.getId()));
+
+        initToolbar(controlEstandar.fecha);
+        initViewPagerAndTabs();
+
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_ce);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int cont = tabLayout.getTabCount();
+                String aux = tabLayout.getTabAt(cont - 1).getText().toString();
+                int km = Integer.parseInt(tabLayout.getTabAt(cont - 1).getText().toString()) + 100;
+                addViewPagerAndTabs(String.valueOf(km));
+            }
+        });
+
+    }
+
+    private void initToolbar(String title){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        String old = getTitle().toString();
+        setTitle(old + ": "+ title);
+    }
 
-/*
-        Toolbar toolbarBotton = (Toolbar) findViewById(R.id.toolbar_bottom);
-        toolbarBotton.inflateMenu(R.menu.toolbar_bottom);
-        toolbarBotton.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+    private void initViewPagerAndTabs() {
+        viewPager = (ViewPager) findViewById(R.id.viewPager);
+        pagerAdapter = new PagerAdapter(getSupportFragmentManager());
+        pagerAdapter.addFragment(NuevoCEFragment.createInstance(), "546000");
+        viewPager.setAdapter(pagerAdapter);
+        viewPager.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onMenuItemClick(MenuItem item) {
-                return false;
+            public void onClick(View view) {
+                Log.d("MyApp", "viewPager CLICK!");
             }
         });
-*/
+        tabLayout = (TabLayout) findViewById(R.id.tabLayout);
+        tabLayout.setupWithViewPager(viewPager);
+    }
 
-        mRecyclerView = (RecyclerView)findViewById(R.id.recycler_view);
-        mRecyclerView.setHasFixedSize(true);
+    private void addViewPagerAndTabs(String title) {
+        pagerAdapter.addFragment(NuevoCEFragment.createInstance(), title);
+        viewPager.setAdapter(pagerAdapter);
+        tabLayout.setupWithViewPager(viewPager);
+    }
 
-        // The number of Columns
-        mLayoutManager = new GridLayoutManager(this, 2);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+    static class PagerAdapter extends FragmentPagerAdapter {
 
-        mAdapter = new NuevoCEAdapter();
-        mRecyclerView.setAdapter(mAdapter);
+        private final List<Fragment> fragmentList = new ArrayList<>();
+        private final List<String> fragmentTitleList = new ArrayList<>();
 
+        public PagerAdapter(FragmentManager fragmentManager) {
+            super(fragmentManager);
+        }
 
+        public void addFragment(Fragment fragment, String title) {
+            fragmentList.add(fragment);
+            fragmentTitleList.add(title);
+        }
 
+        @Override
+        public Fragment getItem(int position) {
+            return fragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return fragmentList.size();
+        }
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return fragmentTitleList.get(position);
+        }
     }
 
 }

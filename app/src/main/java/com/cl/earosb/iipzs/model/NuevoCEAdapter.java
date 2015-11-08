@@ -28,7 +28,7 @@ public class NuevoCEAdapter extends RecyclerView.Adapter<NuevoCEAdapter.ViewHold
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup viewGroup, int i) {
         View v = LayoutInflater.from(viewGroup.getContext())
-                .inflate(R.layout.grid_nuevo_ce, viewGroup, false);
+                .inflate(R.layout.item_nuevo_ce, viewGroup, false);
         ViewHolder viewHolder = new ViewHolder(v);
         return viewHolder;
     }

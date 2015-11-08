@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -68,8 +69,11 @@ public class ControlEstandarAdapter extends ArrayAdapter<ControlEstandar> {
         btn_edit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("Edit_CE", String.valueOf(item.getId()));
-                context.startActivity(new Intent(getContext(), NuevoCEActivity.class));
+                Intent intent = new Intent(getContext(), NuevoCEActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putLong("ce_id", item.getId());
+                intent.putExtras(bundle);
+                context.startActivity(intent);
             }
         });
 
