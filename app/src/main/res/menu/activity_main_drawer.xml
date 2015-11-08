@@ -10,8 +10,8 @@
 
     <item android:title="Aplicación">
         <menu>
-            <item android:id="@+id/nav_manage" android:icon="@android:drawable/ic_menu_manage"
-                android:title="Configurar" />
+            <item android:id="@+id/nav_manage" android:icon="@android:drawable/ic_menu_preferences"
+                android:title="Preferencias" />
             <item android:id="@+id/nav_logout" android:icon="@android:drawable/ic_menu_close_clear_cancel"
                 android:title="Cerrar sesión" />
         </menu>

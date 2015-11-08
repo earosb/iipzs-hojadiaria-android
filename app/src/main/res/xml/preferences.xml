@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <PreferenceCategory android:title="@string/title_category_visual">
+
+        <ListPreference
+            android:defaultValue="2"
+            android:dialogTitle="@string/title_columns_grid_number"
+            android:entries="@array/entries_columns_grid_number"
+            android:entryValues="@array/entryvalues_columns_grid_number"
+            android:key="columns_grid_number"
+            android:summary="@string/summary_columns_grid_number"
+            android:title="@string/title_columns_grid_number" />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

@@ -7,8 +7,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -24,6 +22,7 @@ import android.widget.EditText;
 
 import com.cl.earosb.iipzs.fragments.CEListFragment;
 import com.cl.earosb.iipzs.fragments.PartidaFragment;
+import com.cl.earosb.iipzs.fragments.PreferencesFragment;
 import com.cl.earosb.iipzs.models.ControlEstandar;
 
 import java.util.Calendar;
@@ -87,13 +86,10 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-        String title = getString(R.string.app_name);
-        Fragment fragment = new CEListFragment();
-        title = "Control de estándar";
+        getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new CEListFragment()).commit();
 
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.content_frame, fragment);
-        ft.commit();
+        String title = getString(R.string.app_name);
+        title = "Control de estándar";
         getSupportActionBar().setTitle(title);
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -148,29 +144,26 @@ public class MainActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        Fragment fragment = null;
         String title = getString(R.string.app_name);
 
         switch (id) {
             case R.id.nav_inspecciones:
-                fragment = new CEListFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new CEListFragment()).commit();
                 title = "Control de estándar";
                 break;
             case R.id.nav_partidas:
-                fragment = new PartidaFragment();
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new PartidaFragment()).commit();
                 title = "Partidas";
                 break;
             case R.id.nav_manage:
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new PreferencesFragment()).commit();
+                title = "Preferencias";
                 break;
             case R.id.nav_logout:
                 getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit().putBoolean("logueado", false).commit();
                 startActivity(new Intent(getApplicationContext(), LoginActivity.class));
                 break;
         }
-
-        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-        ft.replace(R.id.content_frame, fragment);
-        ft.commit();
 
         getSupportActionBar().setTitle(title);
 

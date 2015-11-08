@@ -31,4 +31,10 @@
     <string name="empty_text"></string>
     <string name="no_data">No existen datos.</string> <!-- Actualice lista de partidas -->
     <string name="title_activity_nuevo_ce">Control de Estándar:&#160;</string>
+
+    <!-- Preferences -->
+    <string name="title_category_visual">Preferencias de visualización</string>
+    <string name="title_columns_grid_number">Columnas de grilla</string>
+    <string name="summary_columns_grid_number">Número de columnas utilizadas en cada grilla</string>
+
 </resources>
