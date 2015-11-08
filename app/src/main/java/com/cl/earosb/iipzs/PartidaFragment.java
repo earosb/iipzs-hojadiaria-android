@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
 import com.cl.earosb.iipzs.model.Partida;
-import com.cl.earosb.iipzs.model.PartidaAdapter;
+import com.cl.earosb.iipzs.adapters.PartidaAdapter;
 import com.github.kevinsawicki.http.HttpRequest;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

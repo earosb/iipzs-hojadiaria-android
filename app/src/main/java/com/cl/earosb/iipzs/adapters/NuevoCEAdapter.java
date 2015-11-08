@@ -1,4 +1,4 @@
-package com.cl.earosb.iipzs.model;
+package com.cl.earosb.iipzs.adapters;
 
 import android.content.Context;
 import android.os.Vibrator;
@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.cl.earosb.iipzs.R;
+import com.cl.earosb.iipzs.model.Partida;
 
 import java.util.List;
 

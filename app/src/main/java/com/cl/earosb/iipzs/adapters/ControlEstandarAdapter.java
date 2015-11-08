@@ -1,4 +1,4 @@
-package com.cl.earosb.iipzs.model;
+package com.cl.earosb.iipzs.adapters;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -15,6 +15,7 @@ import android.widget.TextView;
 
 import com.cl.earosb.iipzs.NuevoCEActivity;
 import com.cl.earosb.iipzs.R;
+import com.cl.earosb.iipzs.model.ControlEstandar;
 
 /**
  * Created by earosb on 16-10-15.

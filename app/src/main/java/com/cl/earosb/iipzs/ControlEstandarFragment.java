@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cl.earosb.iipzs.model.ControlEstandar;
-import com.cl.earosb.iipzs.model.ControlEstandarAdapter;
+import com.cl.earosb.iipzs.adapters.ControlEstandarAdapter;
 
 import java.util.List;
 

@@ -1,4 +1,6 @@
-package com.cl.earosb.iipzs.model;
+package com.cl.earosb.iipzs.adapters;
+
+import com.cl.earosb.iipzs.model.Partida;
 
 import java.util.ArrayList;
 import java.util.HashMap;

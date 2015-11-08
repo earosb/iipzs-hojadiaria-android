@@ -1,4 +1,4 @@
-package com.cl.earosb.iipzs.model;
+package com.cl.earosb.iipzs.adapters;
 
 import android.app.Activity;
 import android.view.LayoutInflater;
@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
+
+import com.cl.earosb.iipzs.model.Partida;
 
 import java.util.List;
 
