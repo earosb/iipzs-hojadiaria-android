@@ -1,4 +1,4 @@
-package com.cl.earosb.iipzs;
+package com.cl.earosb.iipzs.fragments;
 
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
@@ -16,7 +16,8 @@ import android.widget.TextView;
 
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
-import com.cl.earosb.iipzs.model.Partida;
+import com.cl.earosb.iipzs.R;
+import com.cl.earosb.iipzs.models.Partida;
 import com.cl.earosb.iipzs.adapters.PartidaAdapter;
 import com.github.kevinsawicki.http.HttpRequest;
 import com.google.gson.Gson;

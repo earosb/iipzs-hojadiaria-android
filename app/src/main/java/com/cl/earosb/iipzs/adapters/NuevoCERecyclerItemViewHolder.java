@@ -2,7 +2,6 @@ package com.cl.earosb.iipzs.adapters;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.util.Log;
@@ -11,9 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.cl.earosb.iipzs.NuevoCEActivity;
 import com.cl.earosb.iipzs.R;
-import com.cl.earosb.iipzs.model.ControlEstandar;
 
 /**
  * Created by earosb on 07-11-15.

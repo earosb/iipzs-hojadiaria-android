@@ -1,4 +1,4 @@
-package com.cl.earosb.iipzs.model;
+package com.cl.earosb.iipzs.models;
 
 /**
  * Objeto para manejar mesajes desde la API

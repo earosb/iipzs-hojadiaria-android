@@ -12,7 +12,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 
-import com.cl.earosb.iipzs.model.ControlEstandar;
+import com.cl.earosb.iipzs.fragments.NuevoCEFragment;
+import com.cl.earosb.iipzs.models.ControlEstandar;
 
 import java.util.ArrayList;
 import java.util.List;

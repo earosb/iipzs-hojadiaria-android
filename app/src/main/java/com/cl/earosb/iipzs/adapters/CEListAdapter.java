@@ -15,23 +15,23 @@ import android.widget.TextView;
 
 import com.cl.earosb.iipzs.NuevoCEActivity;
 import com.cl.earosb.iipzs.R;
-import com.cl.earosb.iipzs.model.ControlEstandar;
+import com.cl.earosb.iipzs.models.ControlEstandar;
 
 /**
  * Created by earosb on 16-10-15.
  */
-public class ControlEstandarAdapter extends ArrayAdapter<ControlEstandar> {
+public class CEListAdapter extends ArrayAdapter<ControlEstandar> {
     private final Activity context;
 
-    public ControlEstandarAdapter(Activity context) {
-        super(context, R.layout.item_control_estandar);
+    public CEListAdapter(Activity context) {
+        super(context, R.layout.item_ce_list);
         this.context = context;
     }
 
     @Override
     public View getView(int position, View view, ViewGroup parent) {
         LayoutInflater inflater = context.getLayoutInflater();
-        final View rowView = inflater.inflate(R.layout.item_control_estandar, null, true);
+        final View rowView = inflater.inflate(R.layout.item_ce_list, null, true);
 
         TextView textFecha = (TextView) rowView.findViewById(R.id.inspeccion_fecha);
         TextView textKm = (TextView) rowView.findViewById(R.id.inspeccion_km_inicio);

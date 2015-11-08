@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.cl.earosb.iipzs.R;
-import com.cl.earosb.iipzs.model.Partida;
+import com.cl.earosb.iipzs.models.Partida;
 
 import java.util.List;
 

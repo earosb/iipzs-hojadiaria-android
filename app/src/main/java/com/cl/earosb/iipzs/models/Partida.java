@@ -1,4 +1,4 @@
-package com.cl.earosb.iipzs.model;
+package com.cl.earosb.iipzs.models;
 
 import android.os.AsyncTask;
 import android.util.Log;

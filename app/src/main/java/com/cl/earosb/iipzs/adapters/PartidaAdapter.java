@@ -7,7 +7,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.cl.earosb.iipzs.model.Partida;
+import com.cl.earosb.iipzs.models.Partida;
 
 import java.util.List;
 

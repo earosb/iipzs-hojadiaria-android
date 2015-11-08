@@ -22,7 +22,9 @@ import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
-import com.cl.earosb.iipzs.model.ControlEstandar;
+import com.cl.earosb.iipzs.fragments.CEListFragment;
+import com.cl.earosb.iipzs.fragments.PartidaFragment;
+import com.cl.earosb.iipzs.models.ControlEstandar;
 
 import java.util.Calendar;
 
@@ -81,7 +83,7 @@ public class MainActivity extends AppCompatActivity
         });
 
         String title = getString(R.string.app_name);
-        Fragment fragment = new ControlEstandarFragment();
+        Fragment fragment = new CEListFragment();
         title = "Control de estándar";
 
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
@@ -146,7 +148,7 @@ public class MainActivity extends AppCompatActivity
 
         switch (id) {
             case R.id.nav_inspecciones:
-                fragment = new ControlEstandarFragment();
+                fragment = new CEListFragment();
                 title = "Control de estándar";
                 break;
             case R.id.nav_partidas:

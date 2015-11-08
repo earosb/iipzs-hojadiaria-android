@@ -1,4 +1,4 @@
-package com.cl.earosb.iipzs;
+package com.cl.earosb.iipzs.fragments;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,8 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.cl.earosb.iipzs.R;
 import com.cl.earosb.iipzs.adapters.NuevoCERecyclerAdapter;
-import com.cl.earosb.iipzs.model.Partida;
+import com.cl.earosb.iipzs.models.Partida;
 
 /**
  * Created by earosb on 07-11-15.

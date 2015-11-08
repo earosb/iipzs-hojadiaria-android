@@ -31,10 +31,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.cl.earosb.iipzs.model.Message;
+import com.cl.earosb.iipzs.models.Message;
 import com.github.kevinsawicki.http.HttpRequest;
 import com.google.gson.Gson;
-import com.google.gson.stream.JsonReader;
 
 import java.util.ArrayList;
 import java.util.HashMap;
