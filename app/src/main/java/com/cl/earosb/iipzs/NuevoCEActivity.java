@@ -38,10 +38,6 @@ public class NuevoCEActivity extends AppCompatActivity {
 
         ControlEstandar controlEstandar = ControlEstandar.load(ControlEstandar.class, ceId);
 
-        Log.d("CE", String.valueOf(controlEstandar.km_inicio));
-        Log.d("CE", controlEstandar.fecha);
-        Log.d("CE", String.valueOf(controlEstandar.getId()));
-
         initToolbar(controlEstandar.fecha);
         initViewPagerAndTabs();
 
@@ -63,7 +59,7 @@ public class NuevoCEActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         String old = getTitle().toString();
-        setTitle(old + ": "+ title);
+        setTitle(old + title);
     }
 
     private void initViewPagerAndTabs() {
