@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity
                                 final EditText input = new EditText(MainActivity.this);
                                 input.setInputType(InputType.TYPE_CLASS_NUMBER);
                                 builderKm_inicio.setView(input);
-                                builderKm_inicio.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                                builderKm_inicio.setPositiveButton("ACEPTAR", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         kmInicioNuevoCE = Integer.parseInt(input.getText().toString());
@@ -71,7 +71,12 @@ public class MainActivity extends AppCompatActivity
                                         controlEstandar.fecha = fechaNuevoCE;
                                         controlEstandar.km_inicio = kmInicioNuevoCE;
                                         controlEstandar.save();
-                                        startActivity(new Intent(getApplicationContext(), NuevoCEActivity.class));
+
+                                        Intent intent = new Intent(getApplicationContext(), NuevoCEActivity.class);
+                                        Bundle bundle = new Bundle();
+                                        bundle.putLong("ce_id", controlEstandar.getId());
+                                        intent.putExtras(bundle);
+                                        startActivity(intent);
                                     }
                                 });
                                 builderKm_inicio.show();

@@ -34,12 +34,11 @@ public class NuevoCEActivity extends AppCompatActivity {
 
         Bundle b = getIntent().getExtras();
         long ceId = b.getLong("ce_id");
-        Log.d("CE", String.valueOf(ceId));
 
         ControlEstandar controlEstandar = ControlEstandar.load(ControlEstandar.class, ceId);
 
         initToolbar(controlEstandar.fecha);
-        initViewPagerAndTabs();
+        initViewPagerAndTabs(controlEstandar.km_inicio);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_ce);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -62,17 +61,11 @@ public class NuevoCEActivity extends AppCompatActivity {
         setTitle(old + title);
     }
 
-    private void initViewPagerAndTabs() {
+    private void initViewPagerAndTabs(int kmInicio) {
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         pagerAdapter = new PagerAdapter(getSupportFragmentManager());
-        pagerAdapter.addFragment(NuevoCEFragment.createInstance(), "546000");
+        pagerAdapter.addFragment(NuevoCEFragment.createInstance(), String.valueOf(kmInicio));
         viewPager.setAdapter(pagerAdapter);
-        viewPager.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("MyApp", "viewPager CLICK!");
-            }
-        });
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
     }
