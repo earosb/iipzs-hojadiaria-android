@@ -116,9 +116,4 @@ public class NuevoCEActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        getIntent().removeExtra("ce_id");
-    }
 }
