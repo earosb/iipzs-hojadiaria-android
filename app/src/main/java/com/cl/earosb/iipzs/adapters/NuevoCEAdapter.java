@@ -38,7 +38,7 @@ public class NuevoCEAdapter extends RecyclerView.Adapter<NuevoCEAdapter.ViewHold
     public void onBindViewHolder(final ViewHolder viewHolder, int i) {
         final Partida p = mPartidas.get(i);
         viewHolder.name.setText(p.nombre);
-        viewHolder.cont.setText(String.valueOf(p.cont));
+        viewHolder.cont.setText(String.valueOf(p.ranking));
         viewHolder.plus1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -79,7 +79,6 @@ public class NuevoCEAdapter extends RecyclerView.Adapter<NuevoCEAdapter.ViewHold
 
     @Override
     public int getItemCount() {
-
         return mPartidas.size();
     }
 

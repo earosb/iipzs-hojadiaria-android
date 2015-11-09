@@ -24,6 +24,7 @@ import com.cl.earosb.iipzs.fragments.CEListFragment;
 import com.cl.earosb.iipzs.fragments.PartidaFragment;
 import com.cl.earosb.iipzs.fragments.PreferencesFragment;
 import com.cl.earosb.iipzs.models.ControlEstandar;
+import com.cl.earosb.iipzs.models.Hectometro;
 
 import java.util.Calendar;
 
@@ -54,7 +55,6 @@ public class MainActivity extends AppCompatActivity
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
                             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-                                Log.d("Fecha: ", dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
                                 fechaNuevoCE = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
                                 AlertDialog.Builder builderKm_inicio = new AlertDialog.Builder(MainActivity.this);
                                 builderKm_inicio.setTitle("Kilómetro de inicio");
@@ -69,7 +69,13 @@ public class MainActivity extends AppCompatActivity
                                         ControlEstandar controlEstandar = new ControlEstandar();
                                         controlEstandar.fecha = fechaNuevoCE;
                                         controlEstandar.km_inicio = kmInicioNuevoCE;
+                                        controlEstandar.sync = false;
                                         controlEstandar.save();
+
+                                        Hectometro hectometro = new Hectometro();
+                                        hectometro.km_inicio = kmInicioNuevoCE;
+                                        hectometro.controlEstandar = controlEstandar;
+                                        hectometro.save();
 
                                         Intent intent = new Intent(getApplicationContext(), NuevoCEActivity.class);
                                         Bundle bundle = new Bundle();
@@ -129,12 +135,10 @@ public class MainActivity extends AppCompatActivity
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
         //noinspection SimplifiableIfStatement
         // if (id == R.id.action_settings) {
         // return true;
         // }
-
         return super.onOptionsItemSelected(item);
     }
 

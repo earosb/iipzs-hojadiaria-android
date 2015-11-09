@@ -6,14 +6,16 @@ import com.activeandroid.annotation.Table;
 
 /**
  * Created by earosb on 20-10-15.
+ *
+ * Nombre del obj apunta a una "Vuelta del hectómetro"
  */
 @Table(name = "Hectometro")
 public class Hectometro extends Model {
 
-    @Column(name = "Km_inicio")
+    @Column(name = "km_inicio")
     public int km_inicio;
 
-    @Column(name = "ControlEstandar")
+    @Column(name = "controlEstandar")
     public ControlEstandar controlEstandar;
 
     public Hectometro() {

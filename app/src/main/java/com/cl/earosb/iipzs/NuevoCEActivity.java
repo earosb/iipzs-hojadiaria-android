@@ -14,6 +14,7 @@ import android.view.View;
 
 import com.cl.earosb.iipzs.fragments.NuevoCEFragment;
 import com.cl.earosb.iipzs.models.ControlEstandar;
+import com.cl.earosb.iipzs.models.Hectometro;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,10 +36,12 @@ public class NuevoCEActivity extends AppCompatActivity {
         Bundle b = getIntent().getExtras();
         long ceId = b.getLong("ce_id");
 
-        ControlEstandar controlEstandar = ControlEstandar.load(ControlEstandar.class, ceId);
+        final ControlEstandar controlEstandar = ControlEstandar.load(ControlEstandar.class, ceId);
 
         initToolbar(controlEstandar.fecha);
-        initViewPagerAndTabs(controlEstandar.km_inicio);
+
+        List<Hectometro> hectometros = controlEstandar.getHectometros();
+        initViewPagerAndTabs(hectometros);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_ce);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -47,13 +50,19 @@ public class NuevoCEActivity extends AppCompatActivity {
                 int cont = tabLayout.getTabCount();
                 String aux = tabLayout.getTabAt(cont - 1).getText().toString();
                 int km = Integer.parseInt(tabLayout.getTabAt(cont - 1).getText().toString()) + 100;
-                addViewPagerAndTabs(String.valueOf(km));
+
+                Hectometro hectometro = new Hectometro();
+                hectometro.km_inicio = km;
+                hectometro.controlEstandar = controlEstandar;
+                hectometro.save();
+
+                addViewPagerAndTabs(km);
             }
         });
 
     }
 
-    private void initToolbar(String title){
+    private void initToolbar(String title) {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -61,17 +70,19 @@ public class NuevoCEActivity extends AppCompatActivity {
         setTitle(old + title);
     }
 
-    private void initViewPagerAndTabs(int kmInicio) {
+    private void initViewPagerAndTabs(List<Hectometro> hectometros) {
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         pagerAdapter = new PagerAdapter(getSupportFragmentManager());
-        pagerAdapter.addFragment(NuevoCEFragment.createInstance(), String.valueOf(kmInicio));
+        for (Hectometro h : hectometros) {
+            pagerAdapter.addFragment(NuevoCEFragment.createInstance(), String.valueOf(h.km_inicio));
+        }
         viewPager.setAdapter(pagerAdapter);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
     }
 
-    private void addViewPagerAndTabs(String title) {
-        pagerAdapter.addFragment(NuevoCEFragment.createInstance(), title);
+    private void addViewPagerAndTabs(int km) {
+        pagerAdapter.addFragment(NuevoCEFragment.createInstance(), String.valueOf(km));
         viewPager.setAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
     }
@@ -99,6 +110,7 @@ public class NuevoCEActivity extends AppCompatActivity {
         public int getCount() {
             return fragmentList.size();
         }
+
         @Override
         public CharSequence getPageTitle(int position) {
             return fragmentTitleList.get(position);

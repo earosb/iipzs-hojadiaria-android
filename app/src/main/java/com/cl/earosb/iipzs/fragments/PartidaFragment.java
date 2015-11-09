@@ -178,7 +178,7 @@ public class PartidaFragment extends Fragment {
                         p.remote_id = partidas.get(i).remote_id;
                         p.nombre = partidas.get(i).nombre;
                         p.unidad = partidas.get(i).unidad;
-                        p.cont = 0;
+                        p.ranking = 0;
                         p.save();
                     }
                 }

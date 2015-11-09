@@ -28,8 +28,6 @@ import java.util.List;
 @Table(name = "Partida")
 public class Partida extends Model {
 
-    private static final String TAG = "iipzs_Partida";
-
     @Column(name = "remote_id")
     public int remote_id;
 
@@ -39,66 +37,22 @@ public class Partida extends Model {
     @Column(name = "unidad")
     public String unidad;
 
-    @Column(name = "cont")
-    public int cont;
+    @Column(name = "ranking")
+    public int ranking;
 
     public Partida() {
         super();
     }
 
-    public static Partida find(int remote_id) {
+    public static Partida findByRemoteId(int remote_id) {
         return Partida.load(Partida.class, remote_id);
     }
 
     public static List<Partida> getAll() {
         return new Select()
                 .from(Partida.class)
-                .orderBy("cont ASC")
+                .orderBy("ranking ASC")
                 .execute();
     }
 
-    public void actualizar() {
-        new DownloadTask().execute("http://icilicafalpzs.cl/api/v1/trabajos");
-    }
-
-    private class DownloadTask extends AsyncTask<String, Long, String> {
-        protected String doInBackground(String... urls) {
-            try {
-                return HttpRequest.get(urls[0]).accept("application/json").body();
-            } catch (HttpRequest.HttpRequestException exception) {
-                return null;
-            }
-        }
-
-        protected void onPostExecute(String response) {
-            // Log.d(TAG, response);
-            Log.d(TAG, prettyfyJSON(response));
-            Gson gson = new Gson();
-            Type type = new TypeToken<ArrayList<Partida>>(){}.getType();
-            List<Partida> partidas = gson.fromJson(response, type);
-
-            ActiveAndroid.beginTransaction();
-            try {
-                int length = partidas.size();
-                for (int i = 0; i < length; i++) {
-                    Partida p = new Partida();
-                    p.remote_id = partidas.get(i).remote_id;
-                    p.nombre = partidas.get(i).nombre;
-                    p.unidad = partidas.get(i).unidad;
-                    p.cont = 0;
-                    p.save();
-                }
-                ActiveAndroid.setTransactionSuccessful();
-            } finally {
-                ActiveAndroid.endTransaction();
-            }
-        }
-
-        private String prettyfyJSON(String json) {
-            Gson gson = new GsonBuilder().setPrettyPrinting().create();
-            JsonParser parser = new JsonParser();
-            JsonElement element = parser.parse(json);
-            return gson.toJson(element);
-        }
-    }
 }

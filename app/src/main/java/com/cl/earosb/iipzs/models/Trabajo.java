@@ -10,16 +10,16 @@ import com.activeandroid.annotation.Table;
 @Table(name = "Trabajo")
 public class Trabajo extends Model {
 
-    @Column(name = "Partida")
+    @Column(name = "partida")
     public Partida partida;
 
-    @Column(name = "Cantidad")
+    @Column(name = "cantidad")
     public int cantidad;
 
-    @Column(name = "Hectometro")
+    @Column(name = "hectometro")
     public Hectometro hectometro;
 
-    @Column(name = "Observaciones")
+    @Column(name = "observaciones")
     public String observaciones;
 
     public Trabajo() {
