@@ -15,7 +15,7 @@ public class Hectometro extends Model {
     @Column(name = "km_inicio")
     public int km_inicio;
 
-    @Column(name = "controlEstandar")
+    @Column(name = "controlEstandar", onDelete = Column.ForeignKeyAction.CASCADE)
     public ControlEstandar controlEstandar;
 
     public Hectometro() {

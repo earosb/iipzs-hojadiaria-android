@@ -16,7 +16,7 @@ public class Trabajo extends Model {
     @Column(name = "cantidad")
     public int cantidad;
 
-    @Column(name = "hectometro")
+    @Column(name = "hectometro", onDelete = Column.ForeignKeyAction.CASCADE)
     public Hectometro hectometro;
 
     @Column(name = "observaciones")
