@@ -2,6 +2,7 @@ package com.cl.earosb.iipzs.adapters;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
 import android.util.Log;
@@ -22,7 +23,7 @@ public class NuevoCERecyclerItemViewHolder extends RecyclerView.ViewHolder {
     private final TextView mPartidaCont;
     private final Button mPlus1;
     private final Button mPlus10;
-    private final Button mObs;
+    public Button mObs;
 
     public NuevoCERecyclerItemViewHolder(final View parent, TextView partidaName, TextView partidaCont, Button plus1, Button plus10, Button obs) {
         super(parent);
@@ -47,7 +48,6 @@ public class NuevoCERecyclerItemViewHolder extends RecyclerView.ViewHolder {
                 p.ranking = (p.ranking + 1);
                 p.save();
                 partidaCont.setText(String.valueOf(p.ranking));
-                //Log.d("MyApp", view.getContext().get);
             }
         });
         plus1.setOnLongClickListener(new View.OnLongClickListener() {
@@ -75,23 +75,23 @@ public class NuevoCERecyclerItemViewHolder extends RecyclerView.ViewHolder {
                 return true;
             }
         });
-        obs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder builderKm_inicio = new AlertDialog.Builder(view.getContext());
-                builderKm_inicio.setTitle("Observaciones");
-                final EditText inputText = new EditText(view.getContext());
-                inputText.setInputType(InputType.TYPE_CLASS_TEXT);
-                builderKm_inicio.setView(inputText);
-                builderKm_inicio.setPositiveButton("Guardar", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Log.d("MyApp", inputText.getText().toString());
-                    }
-                });
-                builderKm_inicio.show();
-            }
-        });
+//        obs.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                AlertDialog.Builder builderKm_inicio = new AlertDialog.Builder(view.getContext());
+//                builderKm_inicio.setTitle("Observaciones");
+//                final EditText inputText = new EditText(view.getContext());
+//                inputText.setInputType(InputType.TYPE_CLASS_TEXT);
+//                builderKm_inicio.setView(inputText);
+//                builderKm_inicio.setPositiveButton("Guardar", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        Log.d("MyApp", inputText.getText().toString());
+//                    }
+//                });
+//                builderKm_inicio.show();
+//            }
+//        });
         return new NuevoCERecyclerItemViewHolder(parent, partidaName, partidaCont, plus1, plus10, obs);
     }
 

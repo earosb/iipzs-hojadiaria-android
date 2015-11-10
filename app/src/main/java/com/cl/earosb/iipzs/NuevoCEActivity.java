@@ -74,7 +74,11 @@ public class NuevoCEActivity extends AppCompatActivity {
         viewPager = (ViewPager) findViewById(R.id.viewPager);
         pagerAdapter = new PagerAdapter(getSupportFragmentManager());
         for (Hectometro h : hectometros) {
-            pagerAdapter.addFragment(NuevoCEFragment.createInstance(), String.valueOf(h.km_inicio));
+            Bundle bundle = new Bundle();
+            bundle.putLong("hectometro_id", h.km_inicio);
+            Fragment f = NuevoCEFragment.createInstance();
+            f.setArguments(bundle);
+            pagerAdapter.addFragment(f, String.valueOf(h.km_inicio));
         }
         viewPager.setAdapter(pagerAdapter);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
