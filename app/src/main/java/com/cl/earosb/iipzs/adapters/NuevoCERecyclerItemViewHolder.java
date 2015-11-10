@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.cl.earosb.iipzs.R;
+import com.cl.earosb.iipzs.models.Partida;
 
 /**
  * Created by earosb on 07-11-15.
@@ -33,7 +34,7 @@ public class NuevoCERecyclerItemViewHolder extends RecyclerView.ViewHolder {
     }
 
     public static NuevoCERecyclerItemViewHolder newInstance(final View parent) {
-        TextView partidaName = (TextView) parent.findViewById(R.id.card_text);
+        final TextView partidaName = (TextView) parent.findViewById(R.id.card_text);
         final TextView partidaCont = (TextView) parent.findViewById(R.id.card_cont);
         Button plus1 = (Button) parent.findViewById(R.id.card_plus1);
         Button plus10 = (Button) parent.findViewById(R.id.card_plus10);
@@ -42,8 +43,11 @@ public class NuevoCERecyclerItemViewHolder extends RecyclerView.ViewHolder {
         plus1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int aux = Integer.parseInt(partidaCont.getText().toString()) + 1;
-                partidaCont.setText(String.valueOf(aux));
+                Partida p = Partida.load(Partida.class, Long.parseLong(partidaName.getTag().toString()));
+                p.ranking = (p.ranking + 1);
+                p.save();
+                partidaCont.setText(String.valueOf(p.ranking));
+                //Log.d("MyApp", view.getContext().get);
             }
         });
         plus1.setOnLongClickListener(new View.OnLongClickListener() {
@@ -57,8 +61,10 @@ public class NuevoCERecyclerItemViewHolder extends RecyclerView.ViewHolder {
         plus10.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                int aux = Integer.parseInt(partidaCont.getText().toString()) + 10;
-                partidaCont.setText(String.valueOf(aux));
+                Partida p = Partida.load(Partida.class, Long.parseLong(partidaName.getTag().toString()));
+                p.ranking = (p.ranking + 1);
+                p.save();
+                partidaCont.setText(String.valueOf(p.ranking));
             }
         });
         plus10.setOnLongClickListener(new View.OnLongClickListener() {
@@ -93,4 +99,11 @@ public class NuevoCERecyclerItemViewHolder extends RecyclerView.ViewHolder {
         mPartidaName.setText(text);
     }
 
+    public void setTagId(long id){
+        mPartidaName.setTag(id);
+    }
+
+    public void setmPartidaCont(int i){
+        this.mPartidaCont.setText(String.valueOf(i));
+    }
 }

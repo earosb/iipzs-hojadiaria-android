@@ -57,6 +57,7 @@ public class NuevoCEActivity extends AppCompatActivity {
                 hectometro.save();
 
                 addViewPagerAndTabs(km);
+                tabLayout.getTabAt(cont).select();
             }
         });
 
@@ -66,8 +67,7 @@ public class NuevoCEActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        String old = getTitle().toString();
-        setTitle(old + title);
+        setTitle(getTitle().toString() + title);
     }
 
     private void initViewPagerAndTabs(List<Hectometro> hectometros) {
@@ -79,6 +79,22 @@ public class NuevoCEActivity extends AppCompatActivity {
         viewPager.setAdapter(pagerAdapter);
         tabLayout = (TabLayout) findViewById(R.id.tabLayout);
         tabLayout.setupWithViewPager(viewPager);
+        tabLayout.setOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                Log.d("TAB", "onTabSelected " + tab.getText().toString());
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+                Log.d("TAB", "onTabUnselected " + tab.getText().toString());
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+                Log.d("TAB", "onTabReselected " + tab.getText().toString());
+            }
+        });
     }
 
     private void addViewPagerAndTabs(int km) {

@@ -33,7 +33,10 @@ public class NuevoCERecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vi
     public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
         NuevoCERecyclerItemViewHolder holder = (NuevoCERecyclerItemViewHolder) viewHolder;
         String itemText = mItemList.get(position).nombre;
+        int itemCont = mItemList.get(position).ranking;
         holder.setItemText(itemText);
+        holder.setmPartidaCont(itemCont);
+        holder.setTagId(mItemList.get(position).getId());
     }
 
     @Override

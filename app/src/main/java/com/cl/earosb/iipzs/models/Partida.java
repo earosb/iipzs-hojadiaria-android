@@ -51,7 +51,7 @@ public class Partida extends Model {
     public static List<Partida> getAll() {
         return new Select()
                 .from(Partida.class)
-                .orderBy("ranking ASC")
+                .orderBy("ranking DESC")
                 .execute();
     }
 
