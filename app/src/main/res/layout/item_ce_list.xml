@@ -1,46 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <LinearLayout
-        android:orientation="vertical"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
         <TextView
+            android:id="@+id/inspeccion_fecha"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Large Text"
-            android:id="@+id/inspeccion_fecha" />
+            android:textAppearance="?android:attr/textAppearanceLarge" />
 
         <TextView
+            android:id="@+id/inspeccion_km_inicio"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Medium Text"
-            android:id="@+id/inspeccion_km_inicio" />
+            android:textAppearance="?android:attr/textAppearanceMedium" />
 
         <LinearLayout
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/inspeccion_upload"
+                android:layout_width="48dp"
+                android:layout_height="fill_parent"
+                android:contentDescription="@string/empty_text"
+                android:src="@drawable/ic_cloud_upload_black_36dp" />
 
             <ImageButton
                 android:id="@+id/inspeccion_edit"
                 android:layout_width="48dp"
                 android:layout_height="fill_parent"
                 android:contentDescription="@string/empty_text"
-                android:onClick="removeAtomPayOnClickHandler"
-                android:src="@android:drawable/ic_menu_edit" />
+                android:src="@drawable/ic_edit_black_36dp" />
+
             <ImageButton
                 android:id="@+id/inspeccion_delete"
                 android:layout_width="48dp"
                 android:layout_height="fill_parent"
                 android:contentDescription="@string/empty_text"
-                android:onClick="deleteInspeccion"
-                android:src="@android:drawable/ic_menu_delete" />
+                android:src="@drawable/ic_delete_black_36dp" />
         </LinearLayout>
 
     </LinearLayout>

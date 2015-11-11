@@ -36,6 +36,7 @@ public class ControlEstandar extends Model {
     public static List<ControlEstandar> getAll(){
         return new Select()
                 .from(ControlEstandar.class)
+                .orderBy("Id DESC")
                 .execute();
     }
 

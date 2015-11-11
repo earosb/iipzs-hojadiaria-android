@@ -34,13 +34,36 @@ public class CEListAdapter extends ArrayAdapter<ControlEstandar> {
 
         TextView textFecha = (TextView) rowView.findViewById(R.id.inspeccion_fecha);
         TextView textKm = (TextView) rowView.findViewById(R.id.inspeccion_km_inicio);
-        ImageButton btn_delete = (ImageButton) rowView.findViewById(R.id.inspeccion_delete);
+        final ImageButton btn_upload = (ImageButton) rowView.findViewById(R.id.inspeccion_upload);
         ImageButton btn_edit = (ImageButton) rowView.findViewById(R.id.inspeccion_edit);
+        ImageButton btn_delete = (ImageButton) rowView.findViewById(R.id.inspeccion_delete);
 
         final ControlEstandar item = getItem(position);
 
         textFecha.setText(this.getContext().getString(R.string.control_estandar_fecha) + " " + item.fecha);
-        textKm.setText(getContext().getString(R.string.control_estandar_km_inicio) + " " + item.km_inicio + " ID: " + item.getId());
+        textKm.setText(getContext().getString(R.string.control_estandar_km_inicio) + " " + item.km_inicio);
+
+        if (item.sync){
+            btn_upload.setImageResource(R.drawable.ic_check_circle_black_36dp);
+        }
+
+        btn_upload.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                btn_upload.setImageResource(R.drawable.ic_check_circle_black_36dp);
+            }
+        });
+
+        btn_edit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), NuevoCEActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putLong("ce_id", item.getId());
+                intent.putExtras(bundle);
+                context.startActivity(intent);
+            }
+        });
 
         btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,17 +85,6 @@ public class CEListAdapter extends ArrayAdapter<ControlEstandar> {
                     }
                 });
                 confirm.show();
-            }
-        });
-
-        btn_edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), NuevoCEActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putLong("ce_id", item.getId());
-                intent.putExtras(bundle);
-                context.startActivity(intent);
             }
         });
 
