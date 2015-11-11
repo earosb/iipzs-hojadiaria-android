@@ -13,7 +13,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -21,7 +20,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 
 import com.cl.earosb.iipzs.fragments.CEListFragment;
-import com.cl.earosb.iipzs.fragments.PartidaFragment;
+import com.cl.earosb.iipzs.fragments.PartidasFragment;
 import com.cl.earosb.iipzs.fragments.PreferencesFragment;
 import com.cl.earosb.iipzs.models.ControlEstandar;
 import com.cl.earosb.iipzs.models.Hectometro;
@@ -156,7 +155,7 @@ public class MainActivity extends AppCompatActivity
                 title = "Control de estándar";
                 break;
             case R.id.nav_partidas:
-                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new PartidaFragment()).commit();
+                getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new PartidasFragment()).commit();
                 title = "Partidas";
                 break;
             case R.id.nav_manage:

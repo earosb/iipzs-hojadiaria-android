@@ -1,24 +1,26 @@
 package com.cl.earosb.iipzs.fragments;
 
 import android.app.ProgressDialog;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.preference.PreferenceManager;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.ListAdapter;
-import android.widget.TextView;
 
 import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
 import com.cl.earosb.iipzs.R;
+import com.cl.earosb.iipzs.adapters.PartidaRecyclerAdapter;
 import com.cl.earosb.iipzs.models.Partida;
-import com.cl.earosb.iipzs.adapters.PartidaAdapter;
 import com.github.kevinsawicki.http.HttpRequest;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -28,76 +30,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A fragment representing a list of Items.
- * <p/>
- * Large screen devices (such as tablets) are supported by replacing the ListView
- * with a GridView.
- * <p/>
+ *
  */
-public class PartidaFragment extends Fragment {
+public class PartidasFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
+    private int columnsGridNumber;
+    private PartidaRecyclerAdapter recyclerAdapter;
+    private RecyclerView recyclerView;
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-
-    /**
-     * The fragment's ListView/GridView.
-     */
-    private AbsListView mListView;
-
-    /**
-     * The Adapter which will be used to populate the ListView/GridView with
-     * Views.
-     */
-    private ListAdapter mAdapter;
-
-    // TODO: Rename and change types of parameters
-    public static PartidaFragment newInstance(String param1, String param2) {
-        PartidaFragment fragment = new PartidaFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    public static PartidasFragment createInstance() {
+        PartidasFragment partidasFragment = new PartidasFragment();
+        return partidasFragment;
     }
 
-    /**
-     * Mandatory empty constructor for the fragment manager to instantiate the
-     * fragment (e.g. upon screen orientation changes).
-     */
-    public PartidaFragment() {
-    }
-
+    @Nullable
     @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        recyclerView = (RecyclerView) inflater.inflate(
+                R.layout.fragment_recycler_view, container, false);
+
         setHasOptionsMenu(true);
 
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getContext());
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+        columnsGridNumber = Integer.parseInt(sharedPreferences.getString("columns_grid_number", "2"));
 
-        mAdapter = new PartidaAdapter(getActivity(), Partida.getAll());
+        setupRecyclerView(recyclerView);
 
+        return recyclerView;
     }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_partida, container, false);
-
-        // Set the adapter
-        mListView = (AbsListView) view.findViewById(android.R.id.list);
-        // ((AdapterView<ListAdapter>) mListView).setAdapter(mAdapter);
-        mListView.setAdapter(mAdapter);
-
-        return view;
+    private void setupRecyclerView(RecyclerView recyclerView) {
+        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), columnsGridNumber));
+        recyclerAdapter = new PartidaRecyclerAdapter(Partida.getAll());
+        recyclerView.setAdapter(recyclerAdapter);
     }
 
     @Override
@@ -118,16 +84,10 @@ public class PartidaFragment extends Fragment {
         return true;
     }
 
-    /**
-     * The default content for this Fragment has a TextView that is shown when
-     * the list is empty. If you would like to change the text, call this method
-     * to supply the text it should use.
-     */
-    public void setEmptyText(CharSequence emptyText) {
-        View emptyView = mListView.getEmptyView();
-
-        if (emptyView instanceof TextView) {
-            ((TextView) emptyView).setText(emptyText);
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+        if (s.equals("columns_grid_number")) {
+            columnsGridNumber = Integer.parseInt(sharedPreferences.getString("columns_grid_number", "2"));
         }
     }
 
@@ -187,7 +147,7 @@ public class PartidaFragment extends Fragment {
                 ActiveAndroid.endTransaction();
             }
 
-            mListView.invalidateViews();
+            setupRecyclerView(recyclerView);
 
             nDialog.hide();
         }
