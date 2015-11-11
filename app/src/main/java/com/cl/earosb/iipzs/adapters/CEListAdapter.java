@@ -2,9 +2,12 @@ package com.cl.earosb.iipzs.adapters;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +18,7 @@ import android.widget.TextView;
 import com.cl.earosb.iipzs.NuevoCEActivity;
 import com.cl.earosb.iipzs.R;
 import com.cl.earosb.iipzs.models.ControlEstandar;
+import com.github.kevinsawicki.http.HttpRequest;
 
 /**
  * Created by earosb on 16-10-15.
@@ -50,6 +54,7 @@ public class CEListAdapter extends ArrayAdapter<ControlEstandar> {
         btn_upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                new UploadTask(item).execute();
                 btn_upload.setImageResource(R.drawable.ic_check_circle_black_36dp);
             }
         });
@@ -89,5 +94,43 @@ public class CEListAdapter extends ArrayAdapter<ControlEstandar> {
         });
 
         return rowView;
+    }
+
+    private class UploadTask extends AsyncTask<String, Long, String> {
+
+        private ProgressDialog nDialog;
+
+        private ControlEstandar controlEstandar;
+
+        public UploadTask(ControlEstandar controlEstandar) {
+            this.controlEstandar = controlEstandar;
+        }
+
+        @Override
+        protected String doInBackground(String... urls) {
+            try {
+                return HttpRequest.get(urls[0]).accept("application/json").body();
+            } catch (HttpRequest.HttpRequestException exception) {
+                return null;
+            }
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            nDialog = new ProgressDialog(getContext());
+            nDialog.setTitle("Subiendo Control de estándar");
+            nDialog.setMessage("Enviando datos...");
+            nDialog.setCancelable(false);
+            nDialog.show();
+        }
+
+        @Override
+        protected void onPostExecute(String response) {
+
+            Log.d("RESPONSE", response);
+
+            nDialog.hide();
+        }
     }
 }
