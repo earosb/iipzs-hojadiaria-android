@@ -164,7 +164,9 @@ public class MainActivity extends AppCompatActivity
                 break;
             case R.id.nav_logout:
                 getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit().putBoolean("logueado", false).commit();
-                startActivity(new Intent(getApplicationContext(), LoginActivity.class));
+                Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
                 break;
         }
 
