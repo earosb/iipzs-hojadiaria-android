@@ -32,6 +32,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.cl.earosb.iipzs.models.Message;
+import com.cl.earosb.iipzs.models.User;
 import com.github.kevinsawicki.http.HttpRequest;
 import com.google.gson.Gson;
 
@@ -338,7 +339,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 Message msg = gson.fromJson(response, Message.class);
 
                 if (!msg.isError()){
+                    User user = msg.getUser();
                     getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit().putBoolean("logueado", true).commit();
+                    getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit().putString("username", user.getUsername()).commit();
+                    getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit().putString("email", user.getEmail()).commit();
+                    getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit().putString("token_api", user.getToken_api()).commit();
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 } else{
                     Log.d("iipzs", msg.getMsg());

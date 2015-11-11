@@ -10,9 +10,20 @@ public class Message {
 
     private String msg;
 
-    public Message(boolean error, String msg) {
+    private User user;
+
+    public Message(boolean error, String msg, User user) {
         this.error = error;
         this.msg = msg;
+        this.user = user;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public boolean isError() {
