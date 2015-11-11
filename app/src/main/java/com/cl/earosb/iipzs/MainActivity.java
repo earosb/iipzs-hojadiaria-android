@@ -1,6 +1,6 @@
 package com.cl.earosb.iipzs;
 
-import android.app.AlertDialog;
+
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -10,24 +10,27 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
-import android.widget.TextView;
 
+import com.activeandroid.ActiveAndroid;
 import com.cl.earosb.iipzs.fragments.CEListFragment;
 import com.cl.earosb.iipzs.fragments.PartidasFragment;
 import com.cl.earosb.iipzs.fragments.PreferencesFragment;
 import com.cl.earosb.iipzs.models.ControlEstandar;
 import com.cl.earosb.iipzs.models.Hectometro;
+import com.cl.earosb.iipzs.models.Partida;
+import com.cl.earosb.iipzs.models.Trabajo;
 
 import java.util.Calendar;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -77,6 +80,23 @@ public class MainActivity extends AppCompatActivity
                                         hectometro.km_inicio = kmInicioNuevoCE;
                                         hectometro.controlEstandar = controlEstandar;
                                         hectometro.save();
+
+                                        List<Partida> partidas = Partida.getAll();
+
+                                        ActiveAndroid.beginTransaction();
+                                        try {
+                                            for (Partida partida : partidas) {
+                                                Trabajo trabajo = new Trabajo();
+                                                trabajo.hectometro = hectometro;
+                                                trabajo.partida = partida;
+                                                trabajo.cantidad = 0;
+                                                trabajo.observaciones = "";
+                                                trabajo.save();
+                                            }
+                                            ActiveAndroid.setTransactionSuccessful();
+                                        } finally {
+                                            ActiveAndroid.endTransaction();
+                                        }
 
                                         Intent intent = new Intent(getApplicationContext(), NuevoCEActivity.class);
                                         Bundle bundle = new Bundle();

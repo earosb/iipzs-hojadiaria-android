@@ -46,6 +46,19 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textStyle="bold" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Observaciones"
+                android:id="@+id/card_obs_text"
+                android:layout_marginLeft="16dp"
+                android:layout_below="@+id/card_text"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_toLeftOf="@+id/card_cont"
+                android:layout_toStartOf="@+id/card_cont"
+                android:layout_above="@+id/card_plus1" />
+
             <Button
                 android:id="@+id/card_plus1"
                 android:layout_width="wrap_content"

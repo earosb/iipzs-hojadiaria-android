@@ -13,12 +13,14 @@ import android.view.ViewGroup;
 
 import com.cl.earosb.iipzs.R;
 import com.cl.earosb.iipzs.adapters.NuevoCERecyclerAdapter;
-import com.cl.earosb.iipzs.models.Partida;
+import com.cl.earosb.iipzs.models.Hectometro;
 
 /**
  * Created by earosb on 07-11-15.
  */
 public class NuevoCEFragment extends Fragment implements SharedPreferences.OnSharedPreferenceChangeListener{
+
+    public static final String ARG_HOCTOMETRO = "id_h";
 
     private int columnsGridNumber;
 
@@ -46,7 +48,9 @@ public class NuevoCEFragment extends Fragment implements SharedPreferences.OnSha
 
     private void setupRecyclerView(RecyclerView recyclerView) {
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), columnsGridNumber));
-        NuevoCERecyclerAdapter recyclerAdapter = new NuevoCERecyclerAdapter(Partida.getAll());
+        Bundle args = getArguments();
+        Hectometro hectometro = Hectometro.load(Hectometro.class, args.getLong(ARG_HOCTOMETRO));
+        NuevoCERecyclerAdapter recyclerAdapter = new NuevoCERecyclerAdapter(hectometro.getTrabajos());
         recyclerView.setAdapter(recyclerAdapter);
     }
 

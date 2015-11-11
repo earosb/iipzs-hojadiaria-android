@@ -4,6 +4,8 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
+import java.util.List;
+
 /**
  * Created by earosb on 20-10-15.
  *
@@ -26,5 +28,9 @@ public class Hectometro extends Model {
         super();
         this.km_inicio = km_inicio;
         this.controlEstandar = controlEstandar;
+    }
+
+    public List<Trabajo> getTrabajos() {
+        return getMany(Trabajo.class, "hectometro");
     }
 }
