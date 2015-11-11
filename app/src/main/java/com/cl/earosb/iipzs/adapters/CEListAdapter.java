@@ -5,7 +5,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -46,7 +45,6 @@ public class CEListAdapter extends ArrayAdapter<ControlEstandar> {
         btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("itemCE", String.valueOf(item.getId()));
                 AlertDialog.Builder confirm = new AlertDialog.Builder(getContext());
                 confirm.setMessage("¿Eliminar Control de Estándar?");
                 confirm.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
