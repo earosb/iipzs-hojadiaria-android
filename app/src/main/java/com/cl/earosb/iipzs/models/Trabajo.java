@@ -33,4 +33,13 @@ public class Trabajo extends Model {
         this.hectometro = hectometro;
         this.observaciones = observaciones;
     }
+
+    @Override
+    public String toString() {
+        return "Trabajo{" + partida.toString() +
+                ", cantidad=" + cantidad +
+                ", " + hectometro.toString() +
+                ", observaciones='" + observaciones + '\'' +
+                '}';
+    }
 }

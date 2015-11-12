@@ -55,4 +55,13 @@ public class Partida extends Model {
                 .execute();
     }
 
+    @Override
+    public String toString() {
+        return "Partida{" +
+                "remote_id=" + remote_id +
+                ", nombre='" + nombre + '\'' +
+                ", unidad='" + unidad + '\'' +
+                ", ranking=" + ranking +
+                '}';
+    }
 }

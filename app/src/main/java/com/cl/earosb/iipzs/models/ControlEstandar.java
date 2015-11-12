@@ -43,4 +43,13 @@ public class ControlEstandar extends Model {
     public List<Hectometro> getHectometros() {
         return getMany(Hectometro.class, "controlEstandar");
     }
+
+    @Override
+    public String toString() {
+        return "ControlEstandar{" +
+                "fecha='" + fecha + '\'' +
+                ", km_inicio=" + km_inicio +
+                ", sync=" + sync +
+                '}';
+    }
 }

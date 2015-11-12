@@ -33,4 +33,12 @@ public class Hectometro extends Model {
     public List<Trabajo> getTrabajos() {
         return getMany(Trabajo.class, "hectometro");
     }
+
+    @Override
+    public String toString() {
+        return "Hectometro{" +
+                "km_inicio=" + km_inicio +
+                ", " + controlEstandar.toString() +
+                '}';
+    }
 }
