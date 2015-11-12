@@ -4,7 +4,9 @@ package com.cl.earosb.iipzs;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.support.annotation.ArrayRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -37,6 +39,7 @@ public class MainActivity extends AppCompatActivity
 
     private int mYear, mMonth, mDay;
     private String fechaNuevoCE;
+    private String fechaTitleNuevoCE;
     private int kmInicioNuevoCE;
 
     @Override
@@ -50,7 +53,6 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 final Calendar c = Calendar.getInstance();
                 mYear = c.get(Calendar.YEAR);
                 mMonth = c.get(Calendar.MONTH);
@@ -58,20 +60,23 @@ public class MainActivity extends AppCompatActivity
                 DatePickerDialog dpd = new DatePickerDialog(MainActivity.this,
                         new DatePickerDialog.OnDateSetListener() {
                             @Override
-                            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                            public void onDateSet(DatePicker view, int year, final int monthOfYear, int dayOfMonth) {
                                 fechaNuevoCE = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
+                                fechaTitleNuevoCE = dayOfMonth+" " + getResources().getStringArray(R.array.months)[monthOfYear] + " " + year;
                                 AlertDialog.Builder builderKm_inicio = new AlertDialog.Builder(MainActivity.this);
-                                builderKm_inicio.setTitle("Kilómetro de inicio");
+                                builderKm_inicio.setTitle(getString(R.string.km_inicio));
                                 final EditText input = new EditText(MainActivity.this);
                                 input.setInputType(InputType.TYPE_CLASS_NUMBER);
                                 builderKm_inicio.setView(input);
-                                builderKm_inicio.setPositiveButton("ACEPTAR", new DialogInterface.OnClickListener() {
+                                builderKm_inicio.setPositiveButton(getString(R.string.agree), new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         kmInicioNuevoCE = Integer.parseInt(input.getText().toString());
 
                                         ControlEstandar controlEstandar = new ControlEstandar();
+                                        controlEstandar.causa = "CE-" + getResources().getStringArray(R.array.months)[monthOfYear];
                                         controlEstandar.fecha = fechaNuevoCE;
+                                        controlEstandar.fecha_title = fechaTitleNuevoCE;
                                         controlEstandar.km_inicio = kmInicioNuevoCE;
                                         controlEstandar.sync = false;
                                         controlEstandar.save();
@@ -105,7 +110,7 @@ public class MainActivity extends AppCompatActivity
                                         startActivity(intent);
                                     }
                                 });
-                                builderKm_inicio.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                builderKm_inicio.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -114,16 +119,14 @@ public class MainActivity extends AppCompatActivity
                                 builderKm_inicio.show();
                             }
                         }, mYear, mMonth, mDay);
-                dpd.setTitle("Fecha Control de Estándar");
+                dpd.setTitle(getString(R.string.date_ce));
                 dpd.show();
             }
         });
 
         getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new CEListFragment()).commit();
 
-        String title = getString(R.string.app_name);
-        title = "Control de estándar";
-        getSupportActionBar().setTitle(title);
+        getSupportActionBar().setTitle(getString(R.string.nav_ce));
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -133,7 +136,7 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-        navigationView.setCheckedItem(R.id.nav_inspecciones);
+        navigationView.setCheckedItem(R.id.nav_ce);
     }
 
     @Override
@@ -178,17 +181,17 @@ public class MainActivity extends AppCompatActivity
         String title = getString(R.string.app_name);
 
         switch (id) {
-            case R.id.nav_inspecciones:
+            case R.id.nav_ce:
                 getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new CEListFragment()).commit();
-                title = "Control de estándar";
+                title = getString(R.string.nav_ce);
                 break;
             case R.id.nav_partidas:
                 getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new PartidasFragment()).commit();
-                title = "Partidas";
+                title = getString(R.string.nav_partidas);
                 break;
-            case R.id.nav_manage:
+            case R.id.nav_preferences:
                 getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new PreferencesFragment()).commit();
-                title = "Preferencias";
+                title = getString(R.string.nav_preferences);
                 break;
             case R.id.nav_logout:
                 getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit().putBoolean("logueado", false).commit();

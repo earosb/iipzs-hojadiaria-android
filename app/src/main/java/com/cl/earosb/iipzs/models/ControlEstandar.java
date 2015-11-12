@@ -13,8 +13,14 @@ import java.util.List;
 @Table(name = "ControlEstandar")
 public class ControlEstandar extends Model {
 
+    @Column(name = "causa")
+    public String causa;
+
     @Column(name = "fecha")
     public String fecha;
+
+    @Column(name = "fecha_title")
+    public String fecha_title;
 
     @Column(name = "km_inicio")
     public int km_inicio;
@@ -26,9 +32,10 @@ public class ControlEstandar extends Model {
         super();
     }
 
-    public ControlEstandar(String fecha, int km_inicio, boolean sync) {
-        super();
+    public ControlEstandar(String causa, String fecha, String fecha_title, int km_inicio, boolean sync) {
+        this.causa = causa;
         this.fecha = fecha;
+        this.fecha_title = fecha_title;
         this.km_inicio = km_inicio;
         this.sync = sync;
     }

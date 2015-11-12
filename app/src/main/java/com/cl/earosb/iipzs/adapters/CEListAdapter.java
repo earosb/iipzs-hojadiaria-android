@@ -15,10 +15,19 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.activeandroid.ActiveAndroid;
 import com.cl.earosb.iipzs.NuevoCEActivity;
 import com.cl.earosb.iipzs.R;
 import com.cl.earosb.iipzs.models.ControlEstandar;
+import com.cl.earosb.iipzs.models.Hectometro;
+import com.cl.earosb.iipzs.models.Message;
+import com.cl.earosb.iipzs.models.Trabajo;
 import com.github.kevinsawicki.http.HttpRequest;
+import com.google.gson.Gson;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by earosb on 16-10-15.
@@ -44,7 +53,7 @@ public class CEListAdapter extends ArrayAdapter<ControlEstandar> {
 
         final ControlEstandar item = getItem(position);
 
-        textFecha.setText(this.getContext().getString(R.string.control_estandar_fecha) + " " + item.fecha);
+        textFecha.setText(this.getContext().getString(R.string.control_estandar_fecha) + " " + item.fecha_title);
         textKm.setText(getContext().getString(R.string.control_estandar_km_inicio) + " " + item.km_inicio);
 
         if (item.sync){
@@ -55,7 +64,6 @@ public class CEListAdapter extends ArrayAdapter<ControlEstandar> {
             @Override
             public void onClick(View view) {
                 new UploadTask(item).execute();
-                btn_upload.setImageResource(R.drawable.ic_check_circle_black_36dp);
             }
         });
 
@@ -75,7 +83,7 @@ public class CEListAdapter extends ArrayAdapter<ControlEstandar> {
             public void onClick(View view) {
                 AlertDialog.Builder confirm = new AlertDialog.Builder(getContext());
                 confirm.setMessage("¿Eliminar Control de Estándar?");
-                confirm.setPositiveButton("Aceptar", new DialogInterface.OnClickListener() {
+                confirm.setPositiveButton(context.getString(R.string.agree), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
                         item.delete();
@@ -83,7 +91,7 @@ public class CEListAdapter extends ArrayAdapter<ControlEstandar> {
                         notifyDataSetChanged();
                     }
                 });
-                confirm.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                confirm.setNegativeButton(context.getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
 
@@ -96,7 +104,7 @@ public class CEListAdapter extends ArrayAdapter<ControlEstandar> {
         return rowView;
     }
 
-    private class UploadTask extends AsyncTask<String, Long, String> {
+    private class UploadTask extends AsyncTask<Void, Void, Message> {
 
         private ProgressDialog nDialog;
 
@@ -104,15 +112,6 @@ public class CEListAdapter extends ArrayAdapter<ControlEstandar> {
 
         public UploadTask(ControlEstandar controlEstandar) {
             this.controlEstandar = controlEstandar;
-        }
-
-        @Override
-        protected String doInBackground(String... urls) {
-            try {
-                return HttpRequest.get(urls[0]).accept("application/json").body();
-            } catch (HttpRequest.HttpRequestException exception) {
-                return null;
-            }
         }
 
         @Override
@@ -126,10 +125,36 @@ public class CEListAdapter extends ArrayAdapter<ControlEstandar> {
         }
 
         @Override
-        protected void onPostExecute(String response) {
+        protected Message doInBackground(Void... voids) {
+            Gson gson = new Gson();
 
-            Log.d("RESPONSE", response);
+            ActiveAndroid.beginTransaction();
+            try{
+                List<Hectometro> hectometros = controlEstandar.getHectometros();
 
+                for (Hectometro h : hectometros){
+                    List<Trabajo> trabajos = h.getTrabajos();
+                    for (Trabajo t : trabajos){
+                        Log.d("T", t.toString());
+                    }
+                }
+                ActiveAndroid.setTransactionSuccessful();
+            }finally {
+                ActiveAndroid.endTransaction();
+            }
+
+            Map<String, String> data = new HashMap<String, String>();
+            data.put("token", getContext().getSharedPreferences("PREFERENCE", getContext().MODE_PRIVATE).getString("token_api", "token_api"));
+//            data.put("trabajos", gson.toJson(trabajos));
+
+            String response = HttpRequest.post("http://www.google.com").form(data).body();
+            // Message msg = gson.fromJson(response, Message.class);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Message response) {
+            // Log.d("RESPONSE", response.getMsg());
             nDialog.hide();
         }
     }
