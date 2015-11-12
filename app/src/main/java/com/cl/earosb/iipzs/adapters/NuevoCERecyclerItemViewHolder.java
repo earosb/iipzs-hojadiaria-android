@@ -91,14 +91,14 @@ public class NuevoCERecyclerItemViewHolder extends RecyclerView.ViewHolder {
         obs.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder builderKm_inicio = new AlertDialog.Builder(view.getContext());
-                builderKm_inicio.setTitle("Observaciones");
+                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
+                builder.setTitle("Observaciones");
                 final EditText inputText = new EditText(view.getContext());
                 inputText.setInputType(InputType.TYPE_CLASS_TEXT);
                 Trabajo t = Trabajo.load(Trabajo.class, Long.parseLong(partidaName.getTag().toString()));
                 inputText.setText(t.observaciones);
-                builderKm_inicio.setView(inputText);
-                builderKm_inicio.setPositiveButton("Guardar", new DialogInterface.OnClickListener() {
+                builder.setView(inputText);
+                builder.setPositiveButton("Guardar", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Trabajo t = Trabajo.load(Trabajo.class, Long.parseLong(partidaName.getTag().toString()));
@@ -107,7 +107,13 @@ public class NuevoCERecyclerItemViewHolder extends RecyclerView.ViewHolder {
                         trabajoObs.setText(t.observaciones);
                     }
                 });
-                builderKm_inicio.show();
+                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                });
+                builder.show();
             }
         });
         return new NuevoCERecyclerItemViewHolder(parent, partidaName, partidaCont, trabajoObs, plus1, plus10, obs);

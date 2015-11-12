@@ -105,6 +105,12 @@ public class MainActivity extends AppCompatActivity
                                         startActivity(intent);
                                     }
                                 });
+                                builderKm_inicio.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                                    }
+                                });
                                 builderKm_inicio.show();
                             }
                         }, mYear, mMonth, mDay);
