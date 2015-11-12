@@ -56,7 +56,7 @@ public class CEListAdapter extends ArrayAdapter<ControlEstandar> {
         textFecha.setText(this.getContext().getString(R.string.control_estandar_fecha) + " " + item.fecha_title);
         textKm.setText(getContext().getString(R.string.control_estandar_km_inicio) + " " + item.km_inicio);
 
-        if (item.sync){
+        if (item.sync) {
             btn_upload.setImageResource(R.drawable.ic_check_circle_black_36dp);
         }
 
@@ -81,23 +81,18 @@ public class CEListAdapter extends ArrayAdapter<ControlEstandar> {
         btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                AlertDialog.Builder confirm = new AlertDialog.Builder(getContext());
-                confirm.setMessage("¿Eliminar Control de Estándar?");
-                confirm.setPositiveButton(context.getString(R.string.agree), new DialogInterface.OnClickListener() {
+                new AlertDialog.Builder(context).setMessage("¿Eliminar Control de Estándar?")
+                        .setPositiveButton(context.getString(R.string.agree), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                item.delete();
+                                remove(item);
+                                notifyDataSetChanged();
+                            }
+                        }).setNegativeButton(context.getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        item.delete();
-                        remove(item);
-                        notifyDataSetChanged();
-                    }
-                });
-                confirm.setNegativeButton(context.getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                    }
-                });
-                confirm.show();
+                    public void onClick(DialogInterface dialogInterface, int i) {}
+                }).show();
             }
         });
 
@@ -129,17 +124,17 @@ public class CEListAdapter extends ArrayAdapter<ControlEstandar> {
             Gson gson = new Gson();
 
             ActiveAndroid.beginTransaction();
-            try{
+            try {
                 List<Hectometro> hectometros = controlEstandar.getHectometros();
 
-                for (Hectometro h : hectometros){
+                for (Hectometro h : hectometros) {
                     List<Trabajo> trabajos = h.getTrabajos();
-                    for (Trabajo t : trabajos){
+                    for (Trabajo t : trabajos) {
                         Log.d("T", t.toString());
                     }
                 }
                 ActiveAndroid.setTransactionSuccessful();
-            }finally {
+            } finally {
                 ActiveAndroid.endTransaction();
             }
 
