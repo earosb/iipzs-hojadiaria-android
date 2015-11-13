@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,13 +19,17 @@ import android.widget.TextView;
 import com.activeandroid.ActiveAndroid;
 import com.cl.earosb.iipzs.NuevoCEActivity;
 import com.cl.earosb.iipzs.R;
+import com.cl.earosb.iipzs.models.AuxObject;
 import com.cl.earosb.iipzs.models.ControlEstandar;
 import com.cl.earosb.iipzs.models.Hectometro;
 import com.cl.earosb.iipzs.models.Message;
 import com.cl.earosb.iipzs.models.Trabajo;
 import com.github.kevinsawicki.http.HttpRequest;
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,7 +68,7 @@ public class CEListAdapter extends ArrayAdapter<ControlEstandar> {
         btn_upload.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new UploadTask(item).execute();
+                new UploadTask(item, view).execute();
             }
         });
 
@@ -91,7 +96,8 @@ public class CEListAdapter extends ArrayAdapter<ControlEstandar> {
                             }
                         }).setNegativeButton(context.getString(R.string.cancel), new DialogInterface.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {}
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                    }
                 }).show();
             }
         });
@@ -105,8 +111,11 @@ public class CEListAdapter extends ArrayAdapter<ControlEstandar> {
 
         private ControlEstandar controlEstandar;
 
-        public UploadTask(ControlEstandar controlEstandar) {
+        private View mView;
+
+        public UploadTask(ControlEstandar controlEstandar, View view) {
             this.controlEstandar = controlEstandar;
+            mView = view;
         }
 
         @Override
@@ -121,7 +130,8 @@ public class CEListAdapter extends ArrayAdapter<ControlEstandar> {
 
         @Override
         protected Message doInBackground(Void... voids) {
-            Gson gson = new Gson();
+
+            List<AuxObject> dataTrabajos = new ArrayList<AuxObject>();
 
             ActiveAndroid.beginTransaction();
             try {
@@ -130,7 +140,10 @@ public class CEListAdapter extends ArrayAdapter<ControlEstandar> {
                 for (Hectometro h : hectometros) {
                     List<Trabajo> trabajos = h.getTrabajos();
                     for (Trabajo t : trabajos) {
-                        Log.d("T", t.toString());
+                        if (t.cantidad > 0) {
+                            AuxObject aux = new AuxObject(t.hectometro.controlEstandar.causa, t.partida.remote_id, t.hectometro.km_inicio, t.hectometro.km_inicio + 100, t.cantidad);
+                            dataTrabajos.add(aux);
+                        }
                     }
                 }
                 ActiveAndroid.setTransactionSuccessful();
@@ -138,19 +151,35 @@ public class CEListAdapter extends ArrayAdapter<ControlEstandar> {
                 ActiveAndroid.endTransaction();
             }
 
+            String json = new Gson().toJson(dataTrabajos);
+
             Map<String, String> data = new HashMap<String, String>();
             data.put("token", getContext().getSharedPreferences("PREFERENCE", getContext().MODE_PRIVATE).getString("token_api", "token_api"));
-//            data.put("trabajos", gson.toJson(trabajos));
+            data.put("trabajos", json);
 
-            String response = HttpRequest.post("http://www.google.com").form(data).body();
-            // Message msg = gson.fromJson(response, Message.class);
-            return null;
+            try {
+                String response = HttpRequest.post("http://icilicafalpzs.cl/api/v1/programar").form(data).body();
+                return new Gson().fromJson(response, Message.class);
+            } catch (Exception e) {
+                return new Message(true, null, null);
+            }
+
         }
 
         @Override
-        protected void onPostExecute(Message response) {
-            // Log.d("RESPONSE", response.getMsg());
+        protected void onPostExecute(Message msg) {
+            Snackbar snackbar;
+            if (!msg.isError()) {
+                controlEstandar.sync = true;
+                controlEstandar.save();
+                snackbar = Snackbar.make(mView, "Control de estándar enviado con éxito", Snackbar.LENGTH_LONG);
+                notifyDataSetChanged();
+            } else {
+                snackbar = Snackbar.make(mView, "Error al enviar datos", Snackbar.LENGTH_LONG);
+            }
             nDialog.hide();
+            snackbar.show();
+
         }
     }
 }
