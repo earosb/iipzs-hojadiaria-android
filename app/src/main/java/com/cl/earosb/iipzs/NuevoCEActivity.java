@@ -61,7 +61,7 @@ public class NuevoCEActivity extends AppCompatActivity {
                     hectometro.controlEstandar = controlEstandar;
                     hectometro.save();
 
-                    List<Partida> partidas = Partida.getAll();
+                    List<Partida> partidas = Partida.getAll("ranking DESC");
 
                     for (Partida partida : partidas) {
                         Trabajo trabajo = new Trabajo();

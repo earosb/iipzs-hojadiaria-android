@@ -64,7 +64,7 @@ public class PartidasFragment extends Fragment implements SharedPreferences.OnSh
 
     private void setupRecyclerView(RecyclerView recyclerView) {
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), columnsGridNumber));
-        recyclerAdapter = new PartidaRecyclerAdapter(Partida.getAll());
+        recyclerAdapter = new PartidaRecyclerAdapter(Partida.getAll("nombre ASC"));
         recyclerView.setAdapter(recyclerAdapter);
     }
 

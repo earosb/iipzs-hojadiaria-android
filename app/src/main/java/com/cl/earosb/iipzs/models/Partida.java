@@ -44,14 +44,10 @@ public class Partida extends Model {
         super();
     }
 
-    public static Partida findByRemoteId(int remote_id) {
-        return Partida.load(Partida.class, remote_id);
-    }
-
-    public static List<Partida> getAll() {
+    public static List<Partida> getAll(String orderBy) {
         return new Select()
                 .from(Partida.class)
-                .orderBy("ranking DESC")
+                .orderBy(orderBy)
                 .execute();
     }
 

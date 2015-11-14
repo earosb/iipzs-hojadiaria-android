@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity
                                         hectometro.controlEstandar = controlEstandar;
                                         hectometro.save();
 
-                                        List<Partida> partidas = Partida.getAll();
+                                        List<Partida> partidas = Partida.getAll("ranking DESC");
 
                                         ActiveAndroid.beginTransaction();
                                         try {
