@@ -200,12 +200,12 @@ public class LoginActivity extends AppCompatActivity {
 
                 return msg;
             } catch (Exception e) {
-                return null;
+                return new Message(true, "Error de conexión", null);
             }
         }
 
         @Override
-        protected void onPostExecute(final Message msg) {
+        protected void onPostExecute(Message msg) {
             mAuthTask = null;
             showProgress(false);
 

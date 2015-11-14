@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.GridLayoutManager;
@@ -20,6 +21,7 @@ import com.activeandroid.ActiveAndroid;
 import com.activeandroid.query.Select;
 import com.cl.earosb.iipzs.R;
 import com.cl.earosb.iipzs.adapters.PartidaRecyclerAdapter;
+import com.cl.earosb.iipzs.models.Message;
 import com.cl.earosb.iipzs.models.Partida;
 import com.github.kevinsawicki.http.HttpRequest;
 import com.google.gson.Gson;
@@ -79,7 +81,7 @@ public class PartidasFragment extends Fragment implements SharedPreferences.OnSh
         int id = item.getItemId();
 
         if (id == R.id.action_update) {
-            new DownloadTask().execute("http://icilicafalpzs.cl/api/v1/trabajos");
+            new DownloadTask().execute();
         }
         return true;
     }
@@ -91,16 +93,17 @@ public class PartidasFragment extends Fragment implements SharedPreferences.OnSh
         }
     }
 
-    private class DownloadTask extends AsyncTask<String, Long, String> {
+    private class DownloadTask extends AsyncTask<Void, Void, Message> {
 
         private ProgressDialog nDialog;
 
         @Override
-        protected String doInBackground(String... urls) {
+        protected Message doInBackground(Void... voids) {
             try {
-                return HttpRequest.get(urls[0]).accept("application/json").body();
+                String response = HttpRequest.get("http://icilicafalpzs.cl/api/v1/trabajos").accept("application/json").body();
+                return new Message(false, response, null);
             } catch (HttpRequest.HttpRequestException exception) {
-                return null;
+                return new Message(true, "Error de conexión", null);
             }
         }
 
@@ -115,41 +118,46 @@ public class PartidasFragment extends Fragment implements SharedPreferences.OnSh
         }
 
         @Override
-        protected void onPostExecute(String response) {
+        protected void onPostExecute(Message msg) {
 
-            Gson gson = new Gson();
-            Type type = new TypeToken<ArrayList<Partida>>() {
-            }.getType();
-            List<Partida> partidas = gson.fromJson(response, type);
+            Snackbar snackbar;
 
-            ActiveAndroid.beginTransaction();
-            try {
-                int length = partidas.size();
-                for (int i = 0; i < length; i++) {
-                    Partida p = new Select().from(Partida.class).where("remote_id = " + partidas.get(i).remote_id).executeSingle();
+            if (!msg.isError()) {
+                Type type = new TypeToken<ArrayList<Partida>>() {}.getType();
+                List<Partida> partidas = new Gson().fromJson(msg.getMsg(), type);
 
-                    if (p != null) {
-                        p.nombre = partidas.get(i).remote_id + " " + partidas.get(i).nombre;
-                        p.nombre = partidas.get(i).nombre;
-                        p.unidad = partidas.get(i).unidad;
-                        p.save();
-                    } else {
-                        p = new Partida();
-                        p.remote_id = partidas.get(i).remote_id;
-                        p.nombre = partidas.get(i).nombre;
-                        p.unidad = partidas.get(i).unidad;
-                        p.ranking = 0;
-                        p.save();
+                ActiveAndroid.beginTransaction();
+                try {
+                    int length = partidas.size();
+                    for (int i = 0; i < length; i++) {
+                        Partida p = new Select().from(Partida.class).where("remote_id = " + partidas.get(i).remote_id).executeSingle();
+
+                        if (p != null) {
+                            p.nombre = partidas.get(i).remote_id + " " + partidas.get(i).nombre;
+                            p.nombre = partidas.get(i).nombre;
+                            p.unidad = partidas.get(i).unidad;
+                            p.save();
+                        } else {
+                            p = new Partida();
+                            p.remote_id = partidas.get(i).remote_id;
+                            p.nombre = partidas.get(i).nombre;
+                            p.unidad = partidas.get(i).unidad;
+                            p.ranking = 0;
+                            p.save();
+                        }
                     }
+                    ActiveAndroid.setTransactionSuccessful();
+                } finally {
+                    ActiveAndroid.endTransaction();
                 }
-                ActiveAndroid.setTransactionSuccessful();
-            } finally {
-                ActiveAndroid.endTransaction();
+                snackbar = Snackbar.make(getView(), "Partidas actualizadas!", Snackbar.LENGTH_LONG);
+                setupRecyclerView(recyclerView);
+            } else {
+                snackbar = Snackbar.make(getView(), "Error de conexión", Snackbar.LENGTH_LONG);
             }
 
-            setupRecyclerView(recyclerView);
-
             nDialog.hide();
+            snackbar.show();
         }
     }
 
