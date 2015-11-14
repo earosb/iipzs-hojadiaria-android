@@ -60,6 +60,7 @@ public class CEListAdapter extends ArrayAdapter<ControlEstandar> {
 
         if (item.sync) {
             btn_upload.setImageResource(R.drawable.ic_check_circle_black_36dp);
+            btn_upload.setEnabled(false);
         }
 
         btn_upload.setOnClickListener(new View.OnClickListener() {
