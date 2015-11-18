@@ -15,13 +15,16 @@ public class AuxObject {
 
     private int cantidad;
 
-    public AuxObject(String causa, int trabajo_id, int km_inicio, int km_termino, int cantidad) {
+    private String obs;
+
+    public AuxObject(String causa, int trabajo_id, int km_inicio, int km_termino, int cantidad, String obs) {
 
         this.causa = causa;
         this.trabajo_id = trabajo_id;
         this.km_inicio = km_inicio;
         this.km_termino = km_termino;
         this.cantidad = cantidad;
+        this.obs = obs;
     }
 
     public String getCausa() {
@@ -62,5 +65,13 @@ public class AuxObject {
 
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
+    }
+
+    public String getObs() {
+        return obs;
+    }
+
+    public void setObs(String obs) {
+        this.obs = obs;
     }
 }

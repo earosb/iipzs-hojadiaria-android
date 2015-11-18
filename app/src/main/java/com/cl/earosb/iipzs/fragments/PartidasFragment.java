@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -29,7 +30,9 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  *
@@ -150,16 +153,14 @@ public class PartidasFragment extends Fragment implements SharedPreferences.OnSh
                 } finally {
                     ActiveAndroid.endTransaction();
                 }
-                snackbar = Snackbar.make(getView(), "Partidas actualizadas!", Snackbar.LENGTH_LONG);
+                snackbar = Snackbar.make(getView(), "Partidas actualizadas", Snackbar.LENGTH_LONG);
                 setupRecyclerView(recyclerView);
             } else {
-                snackbar = Snackbar.make(getView(), "Error de conexión", Snackbar.LENGTH_LONG);
+                snackbar = Snackbar.make(getView(), msg.getMsg(), Snackbar.LENGTH_LONG);
             }
-
             nDialog.hide();
             snackbar.show();
         }
     }
-
 
 }

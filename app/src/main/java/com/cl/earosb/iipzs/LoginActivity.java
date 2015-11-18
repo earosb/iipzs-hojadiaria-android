@@ -195,10 +195,8 @@ public class LoginActivity extends AppCompatActivity {
                 data.put("password", mPassword);
 
                 String response = HttpRequest.post("http://icilicafalpzs.cl/api/v1/login").form(data).body();
-                Gson gson = new Gson();
-                Message msg = gson.fromJson(response, Message.class);
 
-                return msg;
+                return new Gson().fromJson(response, Message.class);
             } catch (Exception e) {
                 return new Message(true, "Error de conexión", null);
             }

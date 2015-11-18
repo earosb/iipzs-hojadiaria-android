@@ -139,7 +139,7 @@ public class CEListAdapter extends ArrayAdapter<ControlEstandar> {
                     List<Trabajo> trabajos = h.getTrabajos();
                     for (Trabajo t : trabajos) {
                         if (t.cantidad > 0) {
-                            AuxObject aux = new AuxObject(t.hectometro.controlEstandar.causa, t.partida.remote_id, t.hectometro.km_inicio, t.hectometro.km_inicio + 100, t.cantidad);
+                            AuxObject aux = new AuxObject(t.hectometro.controlEstandar.causa, t.partida.remote_id, t.hectometro.km_inicio, t.hectometro.km_inicio + 100, t.cantidad, t.observaciones);
                             dataTrabajos.add(aux);
                         }
                     }
@@ -159,7 +159,7 @@ public class CEListAdapter extends ArrayAdapter<ControlEstandar> {
                 String response = HttpRequest.post("http://icilicafalpzs.cl/api/v1/programar").form(data).body();
                 return new Gson().fromJson(response, Message.class);
             } catch (Exception e) {
-                return new Message(true, null, null);
+                return new Message(true, "Error de conexión", null);
             }
 
         }
@@ -173,7 +173,7 @@ public class CEListAdapter extends ArrayAdapter<ControlEstandar> {
                 snackbar = Snackbar.make(mView, "Control de estándar enviado con éxito", Snackbar.LENGTH_LONG);
                 notifyDataSetChanged();
             } else {
-                snackbar = Snackbar.make(mView, "Error al enviar datos", Snackbar.LENGTH_LONG);
+                snackbar = Snackbar.make(mView, msg.getMsg(), Snackbar.LENGTH_LONG);
             }
             nDialog.hide();
             snackbar.show();
