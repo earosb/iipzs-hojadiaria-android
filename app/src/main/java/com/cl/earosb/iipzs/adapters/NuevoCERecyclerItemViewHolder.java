@@ -111,12 +111,7 @@ public class NuevoCERecyclerItemViewHolder extends RecyclerView.ViewHolder {
                         trabajoObs.setText(t.observaciones);
                     }
                 });
-                builder.setNegativeButton("Cancelar", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                    }
-                });
+                builder.setNegativeButton("Cancelar", null);
                 builder.show();
             }
         });
