@@ -24,7 +24,7 @@ public class NuevoCERecyclerItemViewHolder extends RecyclerView.ViewHolder {
     private Button mPlus10;
     private Button mObs;
 
-    public NuevoCERecyclerItemViewHolder(final View parent, TextView partidaNombre, TextView trabajoCont,TextView trabajoObs, Button plus1, Button plus10, Button obs) {
+    public NuevoCERecyclerItemViewHolder(final View parent, TextView partidaNombre, TextView trabajoCont, TextView trabajoObs, Button plus1, Button plus10, Button obs) {
         super(parent);
         mCardText = partidaNombre;
         mCardCont = trabajoCont;
@@ -82,6 +82,10 @@ public class NuevoCERecyclerItemViewHolder extends RecyclerView.ViewHolder {
                 Trabajo t = Trabajo.load(Trabajo.class, Long.parseLong(partidaName.getTag().toString()));
                 if (t.cantidad > 9) {
                     t.cantidad = t.cantidad - 10;
+                    t.save();
+                    partidaCont.setText(String.valueOf(t.cantidad));
+                } else {
+                    t.cantidad = 0;
                     t.save();
                     partidaCont.setText(String.valueOf(t.cantidad));
                 }
