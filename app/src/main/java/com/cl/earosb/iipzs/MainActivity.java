@@ -4,9 +4,7 @@ package com.cl.earosb.iipzs;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.res.Resources;
 import android.os.Bundle;
-import android.support.annotation.ArrayRes;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -37,11 +35,6 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
-    private int mYear, mMonth, mDay;
-    private String fechaNuevoCE;
-    private String fechaTitleNuevoCE;
-    private int kmInicioNuevoCE;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,74 +46,7 @@ public class MainActivity extends AppCompatActivity
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Calendar c = Calendar.getInstance();
-                mYear = c.get(Calendar.YEAR);
-                mMonth = c.get(Calendar.MONTH);
-                mDay = c.get(Calendar.DAY_OF_MONTH);
-                DatePickerDialog dpd = new DatePickerDialog(MainActivity.this,
-                        new DatePickerDialog.OnDateSetListener() {
-                            @Override
-                            public void onDateSet(DatePicker view, int year, final int monthOfYear, int dayOfMonth) {
-                                fechaNuevoCE = dayOfMonth + "-" + (monthOfYear + 1) + "-" + year;
-                                fechaTitleNuevoCE = dayOfMonth+" " + getResources().getStringArray(R.array.months)[monthOfYear] + " " + year;
-                                AlertDialog.Builder builderKm_inicio = new AlertDialog.Builder(MainActivity.this);
-                                builderKm_inicio.setTitle(getString(R.string.km_inicio));
-                                final EditText input = new EditText(MainActivity.this);
-                                input.setInputType(InputType.TYPE_CLASS_NUMBER);
-                                builderKm_inicio.setView(input);
-                                builderKm_inicio.setPositiveButton(getString(R.string.agree), new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        kmInicioNuevoCE = Integer.parseInt(input.getText().toString());
-
-                                        ControlEstandar controlEstandar = new ControlEstandar();
-                                        controlEstandar.causa = "CE-" + getResources().getStringArray(R.array.months)[monthOfYear];
-                                        controlEstandar.fecha = fechaNuevoCE;
-                                        controlEstandar.fecha_title = fechaTitleNuevoCE;
-                                        controlEstandar.km_inicio = kmInicioNuevoCE;
-                                        controlEstandar.sync = false;
-                                        controlEstandar.save();
-
-                                        Hectometro hectometro = new Hectometro();
-                                        hectometro.km_inicio = kmInicioNuevoCE;
-                                        hectometro.controlEstandar = controlEstandar;
-                                        hectometro.save();
-
-                                        List<Partida> partidas = Partida.getAll("ranking DESC");
-
-                                        ActiveAndroid.beginTransaction();
-                                        try {
-                                            for (Partida partida : partidas) {
-                                                Trabajo trabajo = new Trabajo();
-                                                trabajo.hectometro = hectometro;
-                                                trabajo.partida = partida;
-                                                trabajo.cantidad = 0;
-                                                trabajo.observaciones = "";
-                                                trabajo.save();
-                                            }
-                                            ActiveAndroid.setTransactionSuccessful();
-                                        } finally {
-                                            ActiveAndroid.endTransaction();
-                                        }
-
-                                        Intent intent = new Intent(getApplicationContext(), NuevoCEActivity.class);
-                                        Bundle bundle = new Bundle();
-                                        bundle.putLong("ce_id", controlEstandar.getId());
-                                        intent.putExtras(bundle);
-                                        startActivity(intent);
-                                    }
-                                });
-                                builderKm_inicio.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                                    }
-                                });
-                                builderKm_inicio.show();
-                            }
-                        }, mYear, mMonth, mDay);
-                dpd.setTitle(getString(R.string.date_ce));
-                dpd.show();
+                startActivity(new Intent(getApplicationContext(), NuevoCEFormActivity.class));
             }
         });
 

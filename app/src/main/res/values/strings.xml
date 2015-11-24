@@ -26,8 +26,10 @@
 
     <!-- Menú -->
     <string name="action_update">Actualizar</string>
+    <string name="action_nuevo_ce">Crear</string>
 
     <!-- Control de estandar -->
+    <string name="title_activity_nuevo_ceform">Nuevo Control de Estándar</string>
     <string name="control_estandar_fecha">Fecha:</string>
     <string name="control_estandar_km_inicio">Kilómetro de inicio:</string>
     <string name="km_inicio">Kilómetro de inicio</string>
@@ -46,6 +48,5 @@
     <string name="agree">Aceptar</string>
     <string name="cancel">Cancelar</string>
     <string name="date_ce">Fecha Control de Estándar</string>
-
 
 </resources>
