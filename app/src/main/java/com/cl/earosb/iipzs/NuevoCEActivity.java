@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 
 import com.activeandroid.ActiveAndroid;
@@ -30,6 +31,8 @@ public class NuevoCEActivity extends AppCompatActivity {
     private PagerAdapter pagerAdapter;
     private TabLayout tabLayout;
 
+    ControlEstandar controlEstandar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,7 +41,7 @@ public class NuevoCEActivity extends AppCompatActivity {
         Bundle b = getIntent().getExtras();
         long ceId = b.getLong("ce_id");
 
-        final ControlEstandar controlEstandar = ControlEstandar.load(ControlEstandar.class, ceId);
+        controlEstandar = ControlEstandar.load(ControlEstandar.class, ceId);
 
         initToolbar(controlEstandar.fecha_title);
 
@@ -53,34 +56,16 @@ public class NuevoCEActivity extends AppCompatActivity {
                 int cont = tabLayout.getTabCount();
                 String aux = tabLayout.getTabAt(cont - 1).getText().toString();
                 int km = Integer.parseInt(tabLayout.getTabAt(cont - 1).getText().toString()) + 100;
-
-                ActiveAndroid.beginTransaction();
-                try {
-                    Hectometro hectometro = new Hectometro();
-                    hectometro.km_inicio = km;
-                    hectometro.controlEstandar = controlEstandar;
-                    hectometro.save();
-
-                    List<Partida> partidas = Partida.getAll("ranking DESC");
-
-                    for (Partida partida : partidas) {
-                        Trabajo trabajo = new Trabajo();
-                        trabajo.hectometro = hectometro;
-                        trabajo.partida = partida;
-                        trabajo.cantidad = 0;
-                        trabajo.observaciones = "";
-                        trabajo.save();
-                    }
-
-                    addViewPagerAndTabs(hectometro);
-
-                    ActiveAndroid.setTransactionSuccessful();
-                } finally {
-                    ActiveAndroid.endTransaction();
-                }
-
-
+                createHectometro(km);
                 tabLayout.getTabAt(cont).select();
+            }
+        });
+
+        FloatingActionButton fabTp = (FloatingActionButton) findViewById(R.id.fab_ce_tp);
+        fabTp.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d("NuevoCE", "Trocha y Peralte");
             }
         });
 
@@ -108,6 +93,36 @@ public class NuevoCEActivity extends AppCompatActivity {
         pagerAdapter.addFragment(NuevoCEFragment.createInstance(), String.valueOf(h.km_inicio), h.getId());
         viewPager.setAdapter(pagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
+    }
+
+    /**
+     * Crea el Hectómetro con la lista de partidas
+     * @param km
+     */
+    private void createHectometro(int km){
+        ActiveAndroid.beginTransaction();
+        try {
+            Hectometro hectometro = new Hectometro();
+            hectometro.km_inicio = km;
+            hectometro.controlEstandar = controlEstandar;
+            hectometro.save();
+
+            List<Partida> partidas = Partida.getAll("ranking DESC");
+
+            for (Partida partida : partidas) {
+                Trabajo trabajo = new Trabajo();
+                trabajo.hectometro = hectometro;
+                trabajo.partida = partida;
+                trabajo.cantidad = 0;
+                trabajo.observaciones = "";
+                trabajo.save();
+            }
+            addViewPagerAndTabs(hectometro);
+
+            ActiveAndroid.setTransactionSuccessful();
+        } finally {
+            ActiveAndroid.endTransaction();
+        }
     }
 
     static class PagerAdapter extends FragmentStatePagerAdapter {
