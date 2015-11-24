@@ -14,6 +14,7 @@ import android.view.View;
 
 import com.activeandroid.ActiveAndroid;
 import com.cl.earosb.iipzs.fragments.NuevoCEFragment;
+import com.cl.earosb.iipzs.fragments.TPDialogFragment;
 import com.cl.earosb.iipzs.models.ControlEstandar;
 import com.cl.earosb.iipzs.models.Hectometro;
 import com.cl.earosb.iipzs.models.Partida;
@@ -66,6 +67,10 @@ public class NuevoCEActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Log.d("NuevoCE", "Trocha y Peralte");
+
+                FragmentManager manager = getSupportFragmentManager();
+                TPDialogFragment dialog = new TPDialogFragment();
+                dialog.show(manager, "dialog");
             }
         });
 
