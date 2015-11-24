@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/action_nuevo_ce" android:title="@string/action_nuevo_ce"
-        android:orderInCategory="100" app:showAsAction="always" android:icon="@drawable/ic_add_circle_white_24dp"/>
-    <item android:id="@+id/action_nuevo_ce_cancel" android:title="@string/cancel"/>
+    <item android:id="@+id/action_nuevo_ce" android:title="@string/action_create"
+        android:orderInCategory="100" app:showAsAction="always" android:icon="@drawable/ic_check_white_24dp"/>
+    <item android:id="@+id/action_nuevo_ce_cancel" android:title="@string/action_cancel"/>
 </menu>

@@ -14,7 +14,7 @@ import android.view.View;
 
 import com.activeandroid.ActiveAndroid;
 import com.cl.earosb.iipzs.fragments.NuevoCEFragment;
-import com.cl.earosb.iipzs.fragments.TPDialogFragment;
+import com.cl.earosb.iipzs.fragments.GeoViaDialogFragment;
 import com.cl.earosb.iipzs.models.ControlEstandar;
 import com.cl.earosb.iipzs.models.Hectometro;
 import com.cl.earosb.iipzs.models.Partida;
@@ -66,10 +66,14 @@ public class NuevoCEActivity extends AppCompatActivity {
         fabTp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d("NuevoCE", "Trocha y Peralte");
-
+                int position = tabLayout.getSelectedTabPosition();
+                int km = Integer.parseInt(tabLayout.getTabAt(position).getText().toString());
+                Bundle args = new Bundle();
+                args.putInt("km_hec", km);
+                args.putLong("ce_id", controlEstandar.getId());
                 FragmentManager manager = getSupportFragmentManager();
-                TPDialogFragment dialog = new TPDialogFragment();
+                GeoViaDialogFragment dialog = new GeoViaDialogFragment();
+                dialog.setArguments(args);
                 dialog.show(manager, "dialog");
             }
         });

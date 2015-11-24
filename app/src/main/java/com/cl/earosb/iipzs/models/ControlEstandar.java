@@ -51,6 +51,10 @@ public class ControlEstandar extends Model {
         return getMany(Hectometro.class, "controlEstandar");
     }
 
+    public List<GeoVia> getGeo() {
+        return getMany(GeoVia.class, "controlEstandar");
+    }
+
     @Override
     public String toString() {
         return "ControlEstandar{" +
