@@ -6,7 +6,7 @@
     android:layout_marginBottom="8dp">
 
     <TextView
-        android:id="@+id/inspeccion_fecha"
+        android:id="@+id/inspeccion_causa_fecha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
@@ -21,7 +21,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/inspeccion_fecha"
+        android:layout_below="@+id/inspeccion_causa_fecha"
         android:text="New Text"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 

@@ -47,7 +47,7 @@ public class CEListAdapter extends ArrayAdapter<ControlEstandar> {
         LayoutInflater inflater = context.getLayoutInflater();
         final View rowView = inflater.inflate(R.layout.item_ce_list, null, true);
 
-        TextView textFecha = (TextView) rowView.findViewById(R.id.inspeccion_fecha);
+        TextView textCausaFecha = (TextView) rowView.findViewById(R.id.inspeccion_causa_fecha);
         TextView textKm = (TextView) rowView.findViewById(R.id.inspeccion_km_inicio);
         final ImageButton btn_upload = (ImageButton) rowView.findViewById(R.id.inspeccion_upload);
         ImageButton btn_edit = (ImageButton) rowView.findViewById(R.id.inspeccion_edit);
@@ -55,7 +55,7 @@ public class CEListAdapter extends ArrayAdapter<ControlEstandar> {
 
         final ControlEstandar item = getItem(position);
 
-        textFecha.setText(this.getContext().getString(R.string.control_estandar_fecha) + " " + item.fecha_title);
+        textCausaFecha.setText(item.causa + " " + item.fecha_title);
         textKm.setText(getContext().getString(R.string.control_estandar_km_inicio) + " " + item.km_inicio);
 
         if (item.sync) {
