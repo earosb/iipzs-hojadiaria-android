@@ -8,6 +8,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -56,7 +57,7 @@ public class CEListAdapter extends ArrayAdapter<ControlEstandar> {
         final ControlEstandar item = getItem(position);
 
         textCausaFecha.setText(item.causa + " " + item.fecha_title);
-        textKm.setText(getContext().getString(R.string.control_estandar_km_inicio) + " " + item.km_inicio);
+        textKm.setText(getContext().getString(R.string.ce_km_inicio) + " " + item.km_inicio);
 
         if (item.sync) {
             btn_upload.setImageResource(R.drawable.ic_check_circle_black_36dp);
@@ -65,8 +66,15 @@ public class CEListAdapter extends ArrayAdapter<ControlEstandar> {
 
         btn_upload.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                new UploadTask(item, view).execute();
+            public void onClick(final View view) {
+                new AlertDialog.Builder(context).setMessage(R.string.ce_sync_msg)
+                        .setPositiveButton(R.string.action_agree, new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                new UploadTask(item, view).execute();
+                            }
+                        }).setNegativeButton(R.string.action_cancel, null)
+                        .show();
             }
         });
 
@@ -84,19 +92,16 @@ public class CEListAdapter extends ArrayAdapter<ControlEstandar> {
         btn_delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new AlertDialog.Builder(context).setMessage("¿Eliminar Control de Estándar?")
-                        .setPositiveButton(context.getString(R.string.agree), new DialogInterface.OnClickListener() {
+                new AlertDialog.Builder(context).setMessage(R.string.ce_delete_msg)
+                        .setPositiveButton(context.getString(R.string.action_agree), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
                                 item.delete();
                                 remove(item);
                                 notifyDataSetChanged();
                             }
-                        }).setNegativeButton(context.getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                    }
-                }).show();
+                        }).setNegativeButton(context.getString(R.string.action_cancel), null)
+                        .show();
             }
         });
 

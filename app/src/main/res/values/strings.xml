@@ -25,6 +25,7 @@
     <string name="nav_logout">Cerrar sesión</string>
 
     <!-- Menú -->
+    <string name="action_agree">Aceptar</string>
     <string name="action_update">Actualizar</string>
     <string name="action_create">Crear</string>
     <string name="action_save">Guardar</string>
@@ -33,9 +34,10 @@
 
     <!-- Control de estandar -->
     <string name="title_activity_nuevo_ceform">Nuevo Control de Estándar</string>
-    <string name="control_estandar_fecha">Fecha:</string>
-    <string name="control_estandar_km_inicio">Kilómetro de inicio:</string>
-    <string name="km_inicio">Kilómetro de inicio</string>
+    <string name="ce_fecha">Fecha</string>
+    <string name="ce_km_inicio">Kilómetro de inicio</string>
+    <string name="ce_sync_msg">¿Enviar control de estándar al servidor?</string>
+    <string name="ce_delete_msg">¿Eliminar Control de Estándar?</string>
 
     <!--Aux-->
     <string name="empty_text"></string>
@@ -48,8 +50,6 @@
     <string name="summary_columns_grid_number">Número de columnas utilizadas en cada grilla</string>
 
     <!-- Buttons -->
-    <string name="agree">Aceptar</string>
-    <string name="cancel">Cancelar</string>
     <string name="date_ce">Fecha Control de Estándar</string>
 
     <string name="geometria_via">Geometría de la vía</string>

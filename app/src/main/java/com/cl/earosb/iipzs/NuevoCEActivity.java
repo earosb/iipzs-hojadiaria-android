@@ -44,7 +44,8 @@ public class NuevoCEActivity extends AppCompatActivity {
 
         controlEstandar = ControlEstandar.load(ControlEstandar.class, ceId);
 
-        initToolbar(controlEstandar.fecha_title);
+        String title = controlEstandar.causa + " " + controlEstandar.fecha_title;
+        initToolbar(title);
 
         List<Hectometro> hectometros = controlEstandar.getHectometros();
 
@@ -84,7 +85,7 @@ public class NuevoCEActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        setTitle(getTitle().toString() + title);
+        setTitle(title);
     }
 
     private void initViewPagerAndTabs(List<Hectometro> hectometros) {

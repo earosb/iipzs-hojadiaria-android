@@ -109,7 +109,7 @@ public class GeoViaDialogFragment extends DialogFragment implements AdapterView.
         final Item item = listitems.get(i);
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle("¿Eliminar " + item.toString() + "?");
-        builder.setPositiveButton(R.string.agree, new DialogInterface.OnClickListener() {
+        builder.setPositiveButton(R.string.action_agree, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 GeoVia.delete(GeoVia.class, item.id);
@@ -117,7 +117,7 @@ public class GeoViaDialogFragment extends DialogFragment implements AdapterView.
                 mAdapter.notifyDataSetChanged();
             }
         });
-        builder.setNegativeButton(R.string.cancel, null);
+        builder.setNegativeButton(R.string.action_cancel, null);
         builder.show();
         return true;
     }
