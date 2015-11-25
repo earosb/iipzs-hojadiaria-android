@@ -39,6 +39,9 @@
     <string name="ce_sync_msg">¿Enviar control de estándar al servidor?</string>
     <string name="ce_delete_msg">¿Eliminar Control de Estándar?</string>
 
+    <!-- GeoVia -->
+    <string name="geovia_delete_msg">¿Eliminar %1$s?</string>
+
     <!--Aux-->
     <string name="empty_text"></string>
     <string name="no_data">No existen datos.</string>

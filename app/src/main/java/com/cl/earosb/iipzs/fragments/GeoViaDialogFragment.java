@@ -107,18 +107,18 @@ public class GeoViaDialogFragment extends DialogFragment implements AdapterView.
     @Override
     public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
         final Item item = listitems.get(i);
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setTitle("¿Eliminar " + item.toString() + "?");
-        builder.setPositiveButton(R.string.action_agree, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialogInterface, int i) {
-                GeoVia.delete(GeoVia.class, item.id);
-                mAdapter.remove(item);
-                mAdapter.notifyDataSetChanged();
-            }
-        });
-        builder.setNegativeButton(R.string.action_cancel, null);
-        builder.show();
+        new AlertDialog.Builder(getActivity())
+                .setMessage(getString(R.string.geovia_delete_msg, item.content))
+                .setPositiveButton(R.string.action_agree, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+                        GeoVia.delete(GeoVia.class, item.id);
+                        mAdapter.remove(item);
+                        mAdapter.notifyDataSetChanged();
+                    }
+                })
+                .setNegativeButton(R.string.action_cancel, null)
+                .show();
         return true;
     }
 
@@ -171,7 +171,7 @@ public class GeoViaDialogFragment extends DialogFragment implements AdapterView.
         mPeralte.clearFocus();
 
         // Ocultra el teclado virtual
-        InputMethodManager imm = (InputMethodManager)getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(mTrocha.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
 
         Item item = new Item(geoVia);
