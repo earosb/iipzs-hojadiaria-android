@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.text.InputType;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -38,6 +39,7 @@ public class NuevoCERecyclerItemViewHolder extends RecyclerView.ViewHolder {
         final TextView partidaName = (TextView) parent.findViewById(R.id.card_text);
         final TextView partidaCont = (TextView) parent.findViewById(R.id.card_cont);
         final TextView trabajoObs = (TextView) parent.findViewById(R.id.card_obs_text);
+        trabajoObs.setMovementMethod(new ScrollingMovementMethod());
         Button plus1 = (Button) parent.findViewById(R.id.card_plus1);
         Button plus10 = (Button) parent.findViewById(R.id.card_plus10);
         Button obs = (Button) parent.findViewById(R.id.card_obs);
@@ -102,7 +104,7 @@ public class NuevoCERecyclerItemViewHolder extends RecyclerView.ViewHolder {
                 Trabajo t = Trabajo.load(Trabajo.class, Long.parseLong(partidaName.getTag().toString()));
                 inputText.setText(t.observaciones);
                 builder.setView(inputText);
-                builder.setPositiveButton("Guardar", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton(R.string.action_save, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Trabajo t = Trabajo.load(Trabajo.class, Long.parseLong(partidaName.getTag().toString()));
@@ -111,7 +113,7 @@ public class NuevoCERecyclerItemViewHolder extends RecyclerView.ViewHolder {
                         trabajoObs.setText(t.observaciones);
                     }
                 });
-                builder.setNegativeButton("Cancelar", null);
+                builder.setNegativeButton(R.string.action_cancel, null);
                 builder.show();
             }
         });
@@ -119,7 +121,7 @@ public class NuevoCERecyclerItemViewHolder extends RecyclerView.ViewHolder {
     }
 
     public void setTrabajo(Trabajo t) {
-        mCardText.setText(t.partida.nombre);
+        mCardText.setText(t.partida.nombre + " (" + t.partida.unidad + ")");
         mCardText.setTag(t.getId());
         mCardCont.setText(String.valueOf(t.cantidad));
         mCardObs.setText(t.observaciones);
