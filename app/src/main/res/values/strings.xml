@@ -40,6 +40,7 @@
     <string name="ce_delete_msg">¿Eliminar Control de Estándar?</string>
 
     <!-- GeoVia -->
+    <string name="geometria_via">Geometría de la vía</string>
     <string name="geovia_delete_msg">¿Eliminar %1$s?</string>
 
     <!--Aux-->
@@ -54,7 +55,5 @@
 
     <!-- Buttons -->
     <string name="date_ce">Fecha Control de Estándar</string>
-
-    <string name="geometria_via">Geometría de la vía</string>
 
 </resources>
