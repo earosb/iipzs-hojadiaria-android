@@ -43,7 +43,7 @@
                 android:id="@+id/nuevo_ce_form_causa"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Causa"
+                android:hint="Causa Ej. ITPFM MES-AÑO"
                 android:inputType="textCapCharacters"
                 android:maxLength="6"
                 android:singleLine="true" />
@@ -77,6 +77,22 @@
                 android:inputType="none"
                 android:onClick="showDatePicker"
                 android:singleLine="true" />
+
+        </android.support.design.widget.TextInputLayout>
+
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/nuevo_ce_form_obs"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:hint="Información general Ej. Inspectores, etc."
+                android:inputType="textMultiLine"
+                android:lines="5"
+                android:gravity="top|left"
+                android:scrollbars="vertical"/>
 
         </android.support.design.widget.TextInputLayout>
 

@@ -29,6 +29,7 @@ public class NuevoCEFormActivity extends AppCompatActivity {
     EditText ceCausa;
     EditText ceKmInicio;
     EditText ceFecha;
+    EditText ceObs;
 
     private int mYear, mMonth, mDay;
 
@@ -53,6 +54,7 @@ public class NuevoCEFormActivity extends AppCompatActivity {
         ceCausa = (EditText) findViewById(R.id.nuevo_ce_form_causa);
         ceKmInicio = (EditText) findViewById(R.id.nuevo_ce_form_km_inicio);
         ceFecha = (EditText) findViewById(R.id.nuevo_ce_form_fecha);
+        ceObs = (EditText) findViewById(R.id.nuevo_ce_form_obs);
     }
 
     /**
@@ -80,7 +82,10 @@ public class NuevoCEFormActivity extends AppCompatActivity {
                 new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, final int monthOfYear, int dayOfMonth) {
-                        ceFecha.setText(dayOfMonth + "-" + (monthOfYear + 1) + "-" + year);
+                        if (dayOfMonth < 10)
+                            ceFecha.setText("0" + dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
+                        else
+                            ceFecha.setText(dayOfMonth + "/" + (monthOfYear + 1) + "/" + year);
                         fechaTitle = dayOfMonth + " " + getResources().getStringArray(R.array.months)[monthOfYear] + " " + year;
 
                     }
@@ -131,12 +136,14 @@ public class NuevoCEFormActivity extends AppCompatActivity {
         String causa = ceCausa.getText().toString();
         int kmInicio = Integer.parseInt(ceKmInicio.getText().toString());
         String fecha = ceFecha.getText().toString();
+        String obs = ceObs.getText().toString();
 
         ControlEstandar controlEstandar = new ControlEstandar();
         controlEstandar.causa = causa;
         controlEstandar.fecha = fecha;
         controlEstandar.fecha_title = fechaTitle;
         controlEstandar.km_inicio = kmInicio;
+        controlEstandar.obs = obs;
         controlEstandar.sync = false;
         controlEstandar.save();
 

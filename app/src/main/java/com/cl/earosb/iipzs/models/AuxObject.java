@@ -17,7 +17,9 @@ public class AuxObject {
 
     private String obs;
 
-    public AuxObject(String causa, int trabajo_id, int km_inicio, int km_termino, int cantidad, String obs) {
+    private String obs_ce;
+
+    public AuxObject(String causa, int trabajo_id, int km_inicio, int km_termino, int cantidad, String obs, String obs_ce) {
 
         this.causa = causa;
         this.trabajo_id = trabajo_id;
@@ -25,6 +27,7 @@ public class AuxObject {
         this.km_termino = km_termino;
         this.cantidad = cantidad;
         this.obs = obs;
+        this.obs_ce = obs_ce;
     }
 
     public String getCausa() {
@@ -73,5 +76,13 @@ public class AuxObject {
 
     public void setObs(String obs) {
         this.obs = obs;
+    }
+
+    public String getObs_ce() {
+        return obs_ce;
+    }
+
+    public void setObs_ce(String obs_ce) {
+        this.obs_ce = obs_ce;
     }
 }

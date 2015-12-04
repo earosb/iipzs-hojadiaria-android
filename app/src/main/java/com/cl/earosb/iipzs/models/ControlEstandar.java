@@ -25,19 +25,14 @@ public class ControlEstandar extends Model {
     @Column(name = "km_inicio")
     public int km_inicio;
 
+    @Column(name = "obs")
+    public String obs;
+
     @Column(name = "sync")
     public boolean sync;
 
     public ControlEstandar() {
         super();
-    }
-
-    public ControlEstandar(String causa, String fecha, String fecha_title, int km_inicio, boolean sync) {
-        this.causa = causa;
-        this.fecha = fecha;
-        this.fecha_title = fecha_title;
-        this.km_inicio = km_inicio;
-        this.sync = sync;
     }
 
     public static List<ControlEstandar> getAll(){
