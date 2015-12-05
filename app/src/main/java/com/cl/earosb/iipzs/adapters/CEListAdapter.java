@@ -56,7 +56,7 @@ public class CEListAdapter extends ArrayAdapter<ControlEstandar> {
 
         final ControlEstandar item = getItem(position);
 
-        textCausaFecha.setText(item.causa + " " + item.fecha_title);
+        textCausaFecha.setText(item.causa + " " + item.fecha);
         textKm.setText(getContext().getString(R.string.ce_km_inicio) + " " + item.km_inicio);
 
         if (item.sync) {

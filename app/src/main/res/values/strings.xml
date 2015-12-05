@@ -19,7 +19,7 @@
     <string name="error_login">"Error en datos de acceso."</string>
 
     <!--Drawer-->
-    <string name="nav_ce">Control de estándar</string>
+    <string name="nav_ce">Inspecciones</string>
     <string name="nav_partidas">Partidas</string>
     <string name="nav_preferences">Preferencias</string>
     <string name="nav_logout">Cerrar sesión</string>
@@ -33,11 +33,11 @@
     <string name="action_cancel">Cancelar</string>
 
     <!-- Control de estandar -->
-    <string name="title_activity_nuevo_ceform">Nuevo Control de Estándar</string>
+    <string name="title_activity_nuevo_ceform">Nueva Inspección</string>
     <string name="ce_fecha">Fecha</string>
     <string name="ce_km_inicio">Kilómetro de inicio</string>
-    <string name="ce_sync_msg">¿Enviar control de estándar al servidor?</string>
-    <string name="ce_delete_msg">¿Eliminar Control de Estándar?</string>
+    <string name="ce_sync_msg">¿Enviar Inspección al servidor?</string>
+    <string name="ce_delete_msg">¿Eliminar Inspección?</string>
 
     <!-- GeoVia -->
     <string name="geometria_via">Geometría de la vía</string>
@@ -46,7 +46,7 @@
     <!--Aux-->
     <string name="empty_text"></string>
     <string name="no_data">No existen datos.</string>
-    <string name="title_activity_nuevo_ce">Control de Estándar:&#160;</string>
+    <string name="title_activity_nuevo_ce">Inspección:&#160;</string>
 
     <!-- Preferences -->
     <string name="title_category_visual">Preferencias de visualización</string>
@@ -54,6 +54,6 @@
     <string name="summary_columns_grid_number">Número de columnas utilizadas en cada grilla</string>
 
     <!-- Buttons -->
-    <string name="date_ce">Fecha Control de Estándar</string>
+    <string name="date_ce">Fecha Inspección</string>
 
 </resources>

@@ -44,7 +44,7 @@ public class NuevoCEActivity extends AppCompatActivity {
 
         controlEstandar = ControlEstandar.load(ControlEstandar.class, ceId);
 
-        String title = controlEstandar.causa + " " + controlEstandar.fecha_title;
+        String title = controlEstandar.causa + " " + controlEstandar.fecha;
         initToolbar(title);
 
         List<Hectometro> hectometros = controlEstandar.getHectometros();
