@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * Created by earosb on 16-10-15.
+ * Control de estandar es una Inspección
  */
 @Table(name = "ControlEstandar")
 public class ControlEstandar extends Model {

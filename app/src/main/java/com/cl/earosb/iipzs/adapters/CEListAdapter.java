@@ -139,12 +139,13 @@ public class CEListAdapter extends ArrayAdapter<ControlEstandar> {
             ActiveAndroid.beginTransaction();
             try {
                 List<Hectometro> hectometros = controlEstandar.getHectometros();
+                String obsCe = controlEstandar.obs;
 
                 for (Hectometro h : hectometros) {
                     List<Trabajo> trabajos = h.getTrabajos();
                     for (Trabajo t : trabajos) {
                         if (t.cantidad > 0) {
-                            AuxObject aux = new AuxObject(t.hectometro.controlEstandar.causa, t.partida.remote_id, t.hectometro.km_inicio, t.hectometro.km_inicio + 100, t.cantidad, t.observaciones);
+                            AuxObject aux = new AuxObject(t.hectometro.controlEstandar.causa, t.partida.remote_id, t.hectometro.km_inicio, t.hectometro.km_inicio + 100, t.cantidad, t.observaciones, obsCe);
                             dataTrabajos.add(aux);
                         }
                     }
