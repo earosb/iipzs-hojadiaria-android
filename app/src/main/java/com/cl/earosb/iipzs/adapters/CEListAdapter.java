@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -50,17 +51,27 @@ public class CEListAdapter extends ArrayAdapter<ControlEstandar> {
 
         TextView textCausaFecha = (TextView) rowView.findViewById(R.id.inspeccion_causa_fecha);
         TextView textKm = (TextView) rowView.findViewById(R.id.inspeccion_km_inicio);
-        final ImageButton btn_upload = (ImageButton) rowView.findViewById(R.id.inspeccion_upload);
-        ImageButton btn_edit = (ImageButton) rowView.findViewById(R.id.inspeccion_edit);
-        ImageButton btn_delete = (ImageButton) rowView.findViewById(R.id.inspeccion_delete);
+        final Button btn_upload = (Button) rowView.findViewById(R.id.inspeccion_upload);
+        Button btn_delete = (Button) rowView.findViewById(R.id.inspeccion_delete);
 
         final ControlEstandar item = getItem(position);
+
+        rowView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), NuevoCEActivity.class);
+                Bundle bundle = new Bundle();
+                bundle.putLong("ce_id", item.getId());
+                intent.putExtras(bundle);
+                context.startActivity(intent);
+            }
+        });
 
         textCausaFecha.setText(item.causa + " " + item.fecha);
         textKm.setText(getContext().getString(R.string.ce_km_inicio) + " " + item.km_inicio);
 
         if (item.sync) {
-            btn_upload.setImageResource(R.drawable.ic_check_circle_black_36dp);
+            btn_upload.setText(R.string.inspeccion_uploaded);
             btn_upload.setEnabled(false);
         }
 
@@ -75,17 +86,6 @@ public class CEListAdapter extends ArrayAdapter<ControlEstandar> {
                             }
                         }).setNegativeButton(R.string.action_cancel, null)
                         .show();
-            }
-        });
-
-        btn_edit.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getContext(), NuevoCEActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putLong("ce_id", item.getId());
-                intent.putExtras(bundle);
-                context.startActivity(intent);
             }
         });
 

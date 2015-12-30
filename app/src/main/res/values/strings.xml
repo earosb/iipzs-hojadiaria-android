@@ -36,8 +36,11 @@
     <string name="title_activity_nuevo_ceform">Nueva Inspección</string>
     <string name="ce_fecha">Fecha</string>
     <string name="ce_km_inicio">Kilómetro de inicio</string>
-    <string name="ce_sync_msg">¿Enviar Inspección al servidor?</string>
+    <string name="ce_sync_msg">¿Cargar Inspección al servidor?</string>
     <string name="ce_delete_msg">¿Eliminar Inspección?</string>
+    <string name="inspeccion_delete">Eliminar</string>
+    <string name="inspeccion_upload">Cargar</string>
+    <string name="inspeccion_uploaded">Cargado</string>
 
     <!-- GeoVia -->
     <string name="geometria_via">Geometría de la vía</string>
