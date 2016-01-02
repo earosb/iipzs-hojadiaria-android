@@ -3,8 +3,11 @@ package com.cl.earosb.iipzs.adapters;
 import android.content.DialogInterface;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.text.InputType;
 import android.text.method.ScrollingMovementMethod;
+import android.util.Log;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -40,83 +43,68 @@ public class NuevoCERecyclerItemViewHolder extends RecyclerView.ViewHolder {
         final TextView partidaCont = (TextView) parent.findViewById(R.id.card_cont);
         final TextView trabajoObs = (TextView) parent.findViewById(R.id.card_obs_text);
         trabajoObs.setMovementMethod(new ScrollingMovementMethod());
-        Button plus1 = (Button) parent.findViewById(R.id.card_plus1);
-        Button plus10 = (Button) parent.findViewById(R.id.card_plus10);
-        Button obs = (Button) parent.findViewById(R.id.card_obs);
+        Button plus1 = null;//(Button) parent.findViewById(R.id.card_plus1);
+        Button plus10 = null;//(Button) parent.findViewById(R.id.card_plus10);
+        Button obs = null;//(Button) parent.findViewById(R.id.card_obs);
 
-        plus1.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Trabajo t = Trabajo.load(Trabajo.class, Long.parseLong(partidaName.getTag().toString()));
-                t.cantidad = t.cantidad + 1;
-                t.partida.ranking = t.partida.ranking + 1;
-                t.partida.save();
-                t.save();
-                partidaCont.setText(String.valueOf(t.cantidad));
-            }
-        });
-        plus1.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                Trabajo t = Trabajo.load(Trabajo.class, Long.parseLong(partidaName.getTag().toString()));
-                if (t.cantidad > 0) {
-                    t.cantidad = t.cantidad - 1;
-                    t.save();
-                    partidaCont.setText(String.valueOf(t.cantidad));
-                }
-                return true;
-            }
-        });
-        plus10.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Trabajo t = Trabajo.load(Trabajo.class, Long.parseLong(partidaName.getTag().toString()));
-                t.cantidad = t.cantidad + 10;
-                t.partida.ranking = t.partida.ranking + 1;
-                t.partida.save();
-                t.save();
-                partidaCont.setText(String.valueOf(t.cantidad));
-            }
-        });
-        plus10.setOnLongClickListener(new View.OnLongClickListener() {
-            @Override
-            public boolean onLongClick(View view) {
-                Trabajo t = Trabajo.load(Trabajo.class, Long.parseLong(partidaName.getTag().toString()));
-                if (t.cantidad > 9) {
-                    t.cantidad = t.cantidad - 10;
-                    t.save();
-                    partidaCont.setText(String.valueOf(t.cantidad));
-                } else {
-                    t.cantidad = 0;
-                    t.save();
-                    partidaCont.setText(String.valueOf(t.cantidad));
-                }
-                return true;
-            }
-        });
-        obs.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
-                builder.setTitle("Observaciones");
-                final EditText inputText = new EditText(view.getContext());
-                inputText.setInputType(InputType.TYPE_CLASS_TEXT);
-                Trabajo t = Trabajo.load(Trabajo.class, Long.parseLong(partidaName.getTag().toString()));
-                inputText.setText(t.observaciones);
-                builder.setView(inputText);
-                builder.setPositiveButton(R.string.action_save, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Trabajo t = Trabajo.load(Trabajo.class, Long.parseLong(partidaName.getTag().toString()));
-                        t.observaciones = inputText.getText().toString();
-                        t.save();
-                        trabajoObs.setText(t.observaciones);
+        Toolbar toolbar = (Toolbar) parent.findViewById(R.id.card_toolbar);
+        if (toolbar != null) {
+            toolbar.inflateMenu(R.menu.card_nuevo_ce);
+            toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem menuItem) {
+                    int id = menuItem.getItemId();
+                    Trabajo t = Trabajo.load(Trabajo.class, Long.parseLong(partidaName.getTag().toString()));
+                    switch (id) {
+                        case R.id.action_plus1:
+                            t.cantidad = t.cantidad + 1;
+                            t.partida.ranking = t.partida.ranking + 1;
+                            t.partida.save();
+                            t.save();
+                            partidaCont.setText(String.valueOf(t.cantidad));
+                            break;
+                        case R.id.action_plus10:
+                            t.cantidad = t.cantidad + 10;
+                            t.partida.ranking = t.partida.ranking + 1;
+                            t.partida.save();
+                            t.save();
+                            partidaCont.setText(String.valueOf(t.cantidad));
+                            break;
+                        case R.id.action_photo:
+                            Log.d("TAG", "Photo");
+                            break;
+                        case R.id.action_obs:
+                            AlertDialog.Builder builder = new AlertDialog.Builder(parent.getContext());
+                            builder.setTitle("Observaciones");
+                            final EditText inputText = new EditText(parent.getContext());
+                            inputText.setInputType(InputType.TYPE_CLASS_TEXT);
+                            inputText.setText(t.observaciones);
+                            builder.setView(inputText);
+                            builder.setPositiveButton(R.string.action_save, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Trabajo t = Trabajo.load(Trabajo.class, Long.parseLong(partidaName.getTag().toString()));
+                                    t.observaciones = inputText.getText().toString();
+                                    t.save();
+                                    trabajoObs.setText(t.observaciones);
+                                }
+                            });
+                            builder.setNegativeButton(R.string.action_cancel, null);
+                            builder.show();
+                            break;
+
                     }
-                });
-                builder.setNegativeButton(R.string.action_cancel, null);
-                builder.show();
-            }
-        });
+                    return true;
+                }
+            });
+            toolbar.setOnLongClickListener(new View.OnLongClickListener() {
+                @Override
+                public boolean onLongClick(View view) {
+                    Log.d("LongClick", String.valueOf(view.getId()));
+                    return false;
+                }
+            });
+        }
         return new NuevoCERecyclerItemViewHolder(parent, partidaName, partidaCont, trabajoObs, plus1, plus10, obs);
     }
 
