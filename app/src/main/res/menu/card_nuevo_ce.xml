@@ -2,25 +2,8 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:id="@+id/action_plus1"
-        android:orderInCategory="100"
-        android:title="+1"
-        app:showAsAction="always|withText" />
-    <item
-        android:id="@+id/action_plus10"
-        android:orderInCategory="100"
-        android:title="+10"
-        app:showAsAction="always|withText" />
-    <item
-        android:id="@+id/action_photo"
-        android:icon="@drawable/ic_save_white_24dp"
-        android:orderInCategory="100"
-        android:title="Tomar fotografía"
-        app:showAsAction="ifRoom" />
-    <item
         android:id="@+id/action_obs"
-        android:icon="@drawable/ic_close_white_24dp"
-        android:orderInCategory="100"
-        android:title="Observaciones"
+        android:icon="@drawable/ic_insert_comment_black_24dp"
+        android:title="@string/text_observaciones"
         app:showAsAction="ifRoom" />
 </menu>
