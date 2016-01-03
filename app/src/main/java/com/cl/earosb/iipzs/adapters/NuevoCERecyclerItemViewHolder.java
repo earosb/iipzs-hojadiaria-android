@@ -43,7 +43,6 @@ public class NuevoCERecyclerItemViewHolder extends RecyclerView.ViewHolder {
         trabajoObs.setMovementMethod(new ScrollingMovementMethod());
         Button plus1 = (Button) parent.findViewById(R.id.card_plus1);
         Button plus10 = (Button) parent.findViewById(R.id.card_plus10);
-        Button obs = null;//(Button) parent.findViewById(R.id.card_obs);
         Toolbar toolbar = (Toolbar) parent.findViewById(R.id.card_toolbar);
 
         plus1.setOnClickListener(new View.OnClickListener() {
