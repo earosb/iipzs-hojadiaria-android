@@ -58,5 +58,12 @@
 
     <!-- Buttons -->
     <string name="date_ce">Fecha Inspección</string>
+    <string name="btn_plus1">+1</string>
+    <string name="btn_plus10">+10</string>
+    <string name="ok">Ok</string>
+
+    <string name="text_observaciones">Observaciones</string>
+    <string name="text_cont">00</string>
+    <string name="text_partida">Partida a realizar</string>
 
 </resources>
