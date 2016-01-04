@@ -1,5 +1,6 @@
 package com.cl.earosb.iipzs;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
@@ -8,8 +9,11 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.activeandroid.ActiveAndroid;
@@ -26,13 +30,15 @@ import java.util.List;
 /**
  * Activity para Nuevo Control de Estandar
  */
-public class NuevoCEActivity extends AppCompatActivity {
+public class NuevoCEActivity extends AppCompatActivity implements View.OnClickListener, SharedPreferences.OnSharedPreferenceChangeListener {
+
+    private static final String LOG_TAG = "NuevoCEActivity";
 
     private ViewPager viewPager;
     private PagerAdapter pagerAdapter;
     private TabLayout tabLayout;
 
-    ControlEstandar controlEstandar;
+    private ControlEstandar controlEstandar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,41 +49,12 @@ public class NuevoCEActivity extends AppCompatActivity {
         long ceId = b.getLong("ce_id");
 
         controlEstandar = ControlEstandar.load(ControlEstandar.class, ceId);
-
         String title = controlEstandar.causa + " " + controlEstandar.fecha;
-        initToolbar(title);
-
         List<Hectometro> hectometros = controlEstandar.getHectometros();
 
+        initToolbar(title);
+        initFabButtons();
         initViewPagerAndTabs(hectometros);
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_ce);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int cont = tabLayout.getTabCount();
-                String aux = tabLayout.getTabAt(cont - 1).getText().toString();
-                int km = Integer.parseInt(tabLayout.getTabAt(cont - 1).getText().toString()) + 100;
-                createHectometro(km);
-                tabLayout.getTabAt(cont).select();
-            }
-        });
-
-        FloatingActionButton fabTp = (FloatingActionButton) findViewById(R.id.fab_ce_tp);
-        fabTp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                int position = tabLayout.getSelectedTabPosition();
-                int km = Integer.parseInt(tabLayout.getTabAt(position).getText().toString());
-                Bundle args = new Bundle();
-                args.putInt("km_hec", km);
-                args.putLong("ce_id", controlEstandar.getId());
-                FragmentManager manager = getSupportFragmentManager();
-                GeoViaDialogFragment dialog = new GeoViaDialogFragment();
-                dialog.setArguments(args);
-                dialog.show(manager, "dialog");
-            }
-        });
 
     }
 
@@ -86,6 +63,13 @@ public class NuevoCEActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         setTitle(title);
+    }
+
+    private void initFabButtons() {
+        FloatingActionButton fabCe = (FloatingActionButton) findViewById(R.id.fab_ce);
+        fabCe.setOnClickListener(this);
+        FloatingActionButton fabTp = (FloatingActionButton) findViewById(R.id.fab_ce_tp);
+        fabTp.setOnClickListener(this);
     }
 
     private void initViewPagerAndTabs(List<Hectometro> hectometros) {
@@ -107,9 +91,10 @@ public class NuevoCEActivity extends AppCompatActivity {
 
     /**
      * Crea el Hectómetro con la lista de partidas
+     *
      * @param km
      */
-    private void createHectometro(int km){
+    private void createHectometro(int km) {
         ActiveAndroid.beginTransaction();
         try {
             Hectometro hectometro = new Hectometro();
@@ -132,6 +117,73 @@ public class NuevoCEActivity extends AppCompatActivity {
             ActiveAndroid.setTransactionSuccessful();
         } finally {
             ActiveAndroid.endTransaction();
+        }
+    }
+
+    @Override
+    public void onClick(View view) {
+        int km, id = view.getId();
+        switch (id) {
+            case R.id.fab_ce:
+                int cont = tabLayout.getTabCount();
+                km = Integer.parseInt(tabLayout.getTabAt(cont - 1).getText().toString()) + 100;
+                createHectometro(km);
+                tabLayout.getTabAt(cont).select();
+                break;
+            case R.id.fab_ce_tp:
+                int position = tabLayout.getSelectedTabPosition();
+                km = Integer.parseInt(tabLayout.getTabAt(position).getText().toString());
+                Bundle args = new Bundle();
+                args.putInt("km_hec", km);
+                args.putLong("ce_id", controlEstandar.getId());
+                FragmentManager manager = getSupportFragmentManager();
+                GeoViaDialogFragment dialog = new GeoViaDialogFragment();
+                dialog.setArguments(args);
+                dialog.show(manager, "dialog");
+                break;
+            default:
+                Log.d(LOG_TAG, "Click otra cosa");
+                break;
+        }
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.activity_nuevo_ce, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        sharedPreferences.registerOnSharedPreferenceChangeListener(this);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        switch (id) {
+            case R.id.action_one_row:
+                editor.putString("columns_grid_number", "1");
+                break;
+            case R.id.action_two_row:
+                editor.putString("columns_grid_number", "2");
+                break;
+            case R.id.action_three_row:
+                editor.putString("columns_grid_number", "3");
+                break;
+            case R.id.action_four_row:
+                editor.putString("columns_grid_number", "4");
+                break;
+        }
+        editor.apply();
+        return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String s) {
+        if (s.equals("columns_grid_number")) {
+            int pos = tabLayout.getSelectedTabPosition();
+            viewPager.setAdapter(pagerAdapter);
+            tabLayout.setupWithViewPager(viewPager);
+            tabLayout.getTabAt(pos).select();
         }
     }
 

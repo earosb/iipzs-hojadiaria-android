@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/action_rows"
+        android:title="Columnas de grilla">
+        <menu>
+            <item
+                android:id="@+id/action_one_row"
+                android:title="Una Columna" />
+            <item
+                android:id="@+id/action_two_row"
+                android:title="Dos Columna" />
+            <item
+                android:id="@+id/action_three_row"
+                android:title="Tres Columna" />
+            <item
+                android:id="@+id/action_four_row"
+                android:title="Cuatro Columna" />
+        </menu>
+    </item>
+</menu>
