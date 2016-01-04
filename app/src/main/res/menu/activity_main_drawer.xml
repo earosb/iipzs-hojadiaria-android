@@ -2,17 +2,28 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="single">
-        <item android:id="@+id/nav_ce" android:icon="@android:drawable/ic_menu_agenda"
+        <item
+            android:id="@+id/nav_ce"
+            android:icon="@android:drawable/ic_menu_agenda"
             android:title="@string/nav_ce" />
-        <item android:id="@+id/nav_partidas" android:icon="@android:drawable/ic_menu_view"
+        <item
+            android:id="@+id/nav_partidas"
+            android:icon="@android:drawable/ic_menu_view"
             android:title="@string/nav_partidas" />
     </group>
 
     <item android:title="Aplicación">
         <menu>
-            <item android:id="@+id/nav_preferences" android:icon="@android:drawable/ic_menu_preferences"
-                android:title="@string/nav_preferences" android:checkable="true"/>
-            <item android:id="@+id/nav_logout" android:icon="@android:drawable/ic_menu_close_clear_cancel"
+            <!--
+            <item
+                android:id="@+id/nav_preferences"
+                android:checkable="true"
+                android:icon="@android:drawable/ic_menu_preferences"
+                android:title="@string/nav_preferences" />
+            -->
+            <item
+                android:id="@+id/nav_logout"
+                android:icon="@android:drawable/ic_menu_close_clear_cancel"
                 android:title="@string/nav_logout" />
         </menu>
     </item>

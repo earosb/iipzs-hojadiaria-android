@@ -55,6 +55,10 @@
     <string name="title_category_visual">Preferencias de visualización</string>
     <string name="title_columns_grid_number">Columnas de grilla</string>
     <string name="summary_columns_grid_number">Número de columnas utilizadas en cada grilla</string>
+    <string name="one_columns_grid_number">Una columna</string>
+    <string name="two_columns_grid_number">Dos columnas</string>
+    <string name="three_columns_grid_number">Tres columnas</string>
+    <string name="four_columns_grid_number">Cuatro columnas</string>
 
     <!-- Buttons -->
     <string name="date_ce">Fecha Inspección</string>

@@ -1,8 +1,6 @@
 package com.cl.earosb.iipzs;
 
 
-import android.app.DatePickerDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -10,27 +8,14 @@ import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.InputType;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.DatePicker;
-import android.widget.EditText;
 
-import com.activeandroid.ActiveAndroid;
 import com.cl.earosb.iipzs.fragments.CEListFragment;
 import com.cl.earosb.iipzs.fragments.PartidasFragment;
-import com.cl.earosb.iipzs.fragments.PreferencesFragment;
-import com.cl.earosb.iipzs.models.ControlEstandar;
-import com.cl.earosb.iipzs.models.Hectometro;
-import com.cl.earosb.iipzs.models.Partida;
-import com.cl.earosb.iipzs.models.Trabajo;
-
-import java.util.Calendar;
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -115,10 +100,12 @@ public class MainActivity extends AppCompatActivity
                 getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new PartidasFragment()).commit();
                 title = getString(R.string.nav_partidas);
                 break;
+/*
             case R.id.nav_preferences:
                 getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new PreferencesFragment()).commit();
                 title = getString(R.string.nav_preferences);
                 break;
+*/
             case R.id.nav_logout:
                 getSharedPreferences("PREFERENCE", MODE_PRIVATE).edit().putBoolean("logueado", false).commit();
                 Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
