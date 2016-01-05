@@ -11,14 +11,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.activeandroid.ActiveAndroid;
-import com.cl.earosb.iipzs.fragments.NuevoCEFragment;
 import com.cl.earosb.iipzs.fragments.GeoViaDialogFragment;
+import com.cl.earosb.iipzs.fragments.NuevoCEFragment;
 import com.cl.earosb.iipzs.models.ControlEstandar;
 import com.cl.earosb.iipzs.models.Hectometro;
 import com.cl.earosb.iipzs.models.Partida;
@@ -39,6 +38,7 @@ public class NuevoCEActivity extends AppCompatActivity implements View.OnClickLi
     private TabLayout tabLayout;
 
     private ControlEstandar controlEstandar;
+    private boolean editable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +49,7 @@ public class NuevoCEActivity extends AppCompatActivity implements View.OnClickLi
         long ceId = b.getLong("ce_id");
 
         controlEstandar = ControlEstandar.load(ControlEstandar.class, ceId);
+        editable = !controlEstandar.sync;
         String title = controlEstandar.causa + " " + controlEstandar.fecha;
         List<Hectometro> hectometros = controlEstandar.getHectometros();
 
@@ -67,7 +68,10 @@ public class NuevoCEActivity extends AppCompatActivity implements View.OnClickLi
 
     private void initFabButtons() {
         FloatingActionButton fabCe = (FloatingActionButton) findViewById(R.id.fab_ce);
-        fabCe.setOnClickListener(this);
+        if (editable)
+            fabCe.setOnClickListener(this);
+        else
+            fabCe.hide();
         FloatingActionButton fabTp = (FloatingActionButton) findViewById(R.id.fab_ce_tp);
         fabTp.setOnClickListener(this);
     }
@@ -142,7 +146,6 @@ public class NuevoCEActivity extends AppCompatActivity implements View.OnClickLi
                 dialog.show(manager, "dialog");
                 break;
             default:
-                Log.d(LOG_TAG, "Click otra cosa");
                 break;
         }
     }

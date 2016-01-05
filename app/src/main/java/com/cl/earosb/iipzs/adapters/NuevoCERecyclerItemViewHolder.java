@@ -5,8 +5,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.InputType;
-import android.text.method.ScrollingMovementMethod;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +18,8 @@ import com.cl.earosb.iipzs.models.Trabajo;
  * Created by earosb on 07-11-15.
  */
 public class NuevoCERecyclerItemViewHolder extends RecyclerView.ViewHolder {
+
+    private static final String LOG_TAG = "NuevoCERecyclerItemViewHolder";
 
     private TextView mCardText;
     private TextView mCardCont;
@@ -40,7 +40,7 @@ public class NuevoCERecyclerItemViewHolder extends RecyclerView.ViewHolder {
         final TextView partidaName = (TextView) parent.findViewById(R.id.card_text);
         final TextView partidaCont = (TextView) parent.findViewById(R.id.card_cont);
         final TextView trabajoObs = (TextView) parent.findViewById(R.id.card_obs_text);
-        trabajoObs.setMovementMethod(new ScrollingMovementMethod());
+
         Button plus1 = (Button) parent.findViewById(R.id.card_plus1);
         Button plus10 = (Button) parent.findViewById(R.id.card_plus10);
         Toolbar toolbar = (Toolbar) parent.findViewById(R.id.card_toolbar);
@@ -68,6 +68,7 @@ public class NuevoCERecyclerItemViewHolder extends RecyclerView.ViewHolder {
                 return true;
             }
         });
+
         plus10.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -157,5 +158,8 @@ public class NuevoCERecyclerItemViewHolder extends RecyclerView.ViewHolder {
         mCardText.setTag(t.getId());
         mCardCont.setText(String.valueOf(t.cantidad));
         mCardObs.setText(t.observaciones);
+        boolean editable = !t.hectometro.controlEstandar.sync;
+        mPlus1.setEnabled(editable);
+        mPlus10.setEnabled(editable);
     }
 }
