@@ -10,7 +10,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,9 +29,7 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  *
@@ -61,6 +58,14 @@ public class PartidasFragment extends Fragment implements SharedPreferences.OnSh
         columnsGridNumber = Integer.parseInt(sharedPreferences.getString("columns_grid_number", "2"));
 
         setupRecyclerView(recyclerView);
+
+        boolean firstRun = sharedPreferences.getBoolean("first_run", true);
+        if (firstRun){
+            new DownloadTask().execute();
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putBoolean("first_run", false);
+            editor.apply();
+        }
 
         return recyclerView;
     }
@@ -136,7 +141,6 @@ public class PartidasFragment extends Fragment implements SharedPreferences.OnSh
                         Partida p = new Select().from(Partida.class).where("remote_id = " + partidas.get(i).remote_id).executeSingle();
 
                         if (p != null) {
-                            p.nombre = partidas.get(i).remote_id + " " + partidas.get(i).nombre;
                             p.nombre = partidas.get(i).nombre;
                             p.unidad = partidas.get(i).unidad;
                             p.save();

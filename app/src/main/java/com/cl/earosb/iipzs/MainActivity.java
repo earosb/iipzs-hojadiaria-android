@@ -2,6 +2,7 @@ package com.cl.earosb.iipzs;
 
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
@@ -9,6 +10,7 @@ import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -48,6 +50,17 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         navigationView.setCheckedItem(R.id.nav_ce);
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        boolean firstRun = sharedPreferences.getBoolean("first_run", true);
+
+        if (firstRun){
+            getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, new PartidasFragment()).commit();
+            String title = getString(R.string.nav_partidas);
+            getSupportActionBar().setTitle(title);
+            navigationView.setCheckedItem(R.id.nav_partidas);
+        }
+
     }
 
     @Override
