@@ -162,10 +162,10 @@ public class CEListAdapter extends ArrayAdapter<ControlEstandar> {
             data.put("trabajos", json);
 
             try {
-                String response = HttpRequest.post("http://icilicafalpzs.cl/api/v1/programar").form(data).body();
+                String response = HttpRequest.post("https://icilicafalpzs.cl/api/v1/programar").form(data).body();
                 return new Gson().fromJson(response, Message.class);
             } catch (Exception e) {
-                return new Message(true, "Error de conexión", null);
+                return new Message(true, "Error de conexión [" + e.getMessage() + "]", null);
             }
 
         }

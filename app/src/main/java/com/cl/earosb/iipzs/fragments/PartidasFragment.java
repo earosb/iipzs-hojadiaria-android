@@ -10,6 +10,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.preference.PreferenceManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -25,8 +26,10 @@ import com.cl.earosb.iipzs.models.Message;
 import com.cl.earosb.iipzs.models.Partida;
 import com.github.kevinsawicki.http.HttpRequest;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Modifier;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -108,7 +111,7 @@ public class PartidasFragment extends Fragment implements SharedPreferences.OnSh
         @Override
         protected Message doInBackground(Void... voids) {
             try {
-                String response = HttpRequest.get("http://icilicafalpzs.cl/api/v1/trabajos").accept("application/json").body();
+                String response = HttpRequest.get("https://icilicafalpzs.cl/api/v1/trabajos").accept("application/json").body();
                 return new Message(false, response, null);
             } catch (HttpRequest.HttpRequestException exception) {
                 return new Message(true, "Error de conexión", null);
@@ -132,7 +135,10 @@ public class PartidasFragment extends Fragment implements SharedPreferences.OnSh
 
             if (!msg.isError()) {
                 Type type = new TypeToken<ArrayList<Partida>>() {}.getType();
-                List<Partida> partidas = new Gson().fromJson(msg.getMsg(), type);
+                GsonBuilder builder = new GsonBuilder();
+                builder.excludeFieldsWithModifiers(Modifier.FINAL, Modifier.TRANSIENT, Modifier.STATIC);
+                Gson gson = builder.create();
+                List<Partida> partidas = gson.fromJson(msg.getMsg(), type);
 
                 ActiveAndroid.beginTransaction();
                 try {

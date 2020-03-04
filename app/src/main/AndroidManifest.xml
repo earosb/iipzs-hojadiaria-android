@@ -20,6 +20,9 @@
         <meta-data
             android:name="AA_DB_VERSION"
             android:value="1" />
+        <meta-data
+            android:name="AA_MODELS"
+            android:value="com.cl.earosb.iipzs.models.ControlEstandar, com.cl.earosb.iipzs.models.GeoVia, com.cl.earosb.iipzs.models.Hectometro, com.cl.earosb.iipzs.models.Partida, com.cl.earosb.iipzs.models.Trabajo"/>
 
         <activity
             android:name=".LoginActivity"

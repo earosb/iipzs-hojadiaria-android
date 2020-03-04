@@ -176,7 +176,7 @@ public class LoginActivity extends AppCompatActivity {
                 data.put("username", mEmail);
                 data.put("password", mPassword);
 
-                String response = HttpRequest.post("http://icilicafalpzs.cl/api/v1/login").form(data).body();
+                String response = HttpRequest.post("https://icilicafalpzs.cl/api/v1/login").form(data).body();
 
                 return new Gson().fromJson(response, Message.class);
             } catch (Exception e) {
